@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 700" width="600" height="700">
+  <defs>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1E7A3A"/>
+      <stop offset="100%" style="stop-color:#2d9b4e"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0D1B3D"/>
+      <stop offset="100%" style="stop-color:#1a2d5a"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="600" height="700" fill="#FFFFFF"/>
+  
+  <!-- SF Monogram Box -->
+  <g transform="translate(100, 40)">
+    <!-- Main SF Block -->
+    <rect x="0" y="0" width="160" height="180" rx="12" fill="#0D1B3D"/>
+    
+    <!-- S Letter -->
+    <text x="30" y="130" font-family="Arial Black, Arial" font-weight="900" font-size="120" fill="#FFFFFF">S</text>
+    
+    <!-- F Letter in Red -->
+    <text x="85" y="130" font-family="Arial Black, Arial" font-weight="900" font-size="120" fill="#E30613">F</text>
+    
+    <!-- Newspaper icon on top -->
+    <g transform="translate(60, -20)">
+      <rect x="0" y="0" width="100" height="60" rx="4" fill="#E6E8EB" stroke="#0D1B3D" stroke-width="2"/>
+      <rect x="5" y="5" width="90" height="50" rx="2" fill="#FFFFFF"/>
+      <line x1="10" y1="15" x2="50" y2="15" stroke="#0D1B3D" stroke-width="2"/>
+      <line x1="10" y1="22" x2="85" y2="22" stroke="#0D1B3D" stroke-width="1"/>
+      <line x1="10" y1="28" x2="85" y2="28" stroke="#0D1B3D" stroke-width="1"/>
+      <line x1="10" y1="34" x2="85" y2="34" stroke="#0D1B3D" stroke-width="1"/>
+      <line x1="10" y1="40" x2="60" y2="40" stroke="#0D1B3D" stroke-width="1"/>
+      <!-- Folded corner -->
+      <polygon points="80,0 100,0 100,20" fill="#c0c4c8"/>
+    </g>
+    
+    <!-- Sylhet Landscape Circle -->
+    <g transform="translate(-20, 80)">
+      <!-- Green hills/tea garden -->
+      <ellipse cx="80" cy="160" rx="100" ry="60" fill="url(#greenGrad)"/>
+      
+      <!-- Rolling hills -->
+      <path d="M -10 160 Q 30 130 70 150 Q 110 130 150 145 Q 170 155 180 160 L 180 200 L -10 200 Z" fill="#1E7A3A"/>
+      <path d="M 0 170 Q 40 150 80 165 Q 120 150 160 160 L 160 200 L 0 200 Z" fill="#2d9b4e"/>
+      
+      <!-- Road/path -->
+      <path d="M 70 200 L 75 170 L 85 170 L 90 200 Z" fill="#E6E8EB" opacity="0.7"/>
+      
+      <!-- Sylhet city silhouette -->
+      <g transform="translate(20, 100)" fill="#0D1B3D" opacity="0.6">
+        <!-- Clock tower -->
+        <rect x="50" y="10" width="8" height="40"/>
+        <polygon points="50,10 54,0 58,10"/>
+        <!-- Bridge arches -->
+        <path d="M 0 45 Q 15 35 30 45 Q 45 35 60 45 Q 75 35 90 45 Q 105 35 120 45" fill="none" stroke="#0D1B3D" stroke-width="2" opacity="0.5"/>
+      </g>
+      
+      <!-- Birds -->
+      <path d="M 120 110 Q 125 105 130 110" fill="none" stroke="#0D1B3D" stroke-width="1.5"/>
+      <path d="M 135 105 Q 140 100 145 105" fill="none" stroke="#0D1B3D" stroke-width="1.5"/>
+    </g>
+  </g>
+  
+  <!-- Brand Name "ShottoFeed" -->
+  <g transform="translate(280, 100)">
+    <text x="0" y="80" font-family="Arial Black, Arial" font-weight="900" font-size="56" fill="#0D1B3D">Shotto</text>
+    <text x="0" y="140" font-family="Arial Black, Arial" font-weight="900" font-size="56" fill="#E30613">Feed</text>
+  </g>
+  
+  <!-- Bengali Tagline -->
+  <g transform="translate(120, 380)">
+    <!-- Decorative lines -->
+    <line x1="0" y1="15" x2="60" y2="15" stroke="#E30613" stroke-width="2"/>
+    <line x1="300" y1="15" x2="360" y2="15" stroke="#E30613" stroke-width="2"/>
+    <!-- Bengali text -->
+    <text x="180" y="22" font-family="'Noto Sans Bengali', 'Kalpurush', sans-serif" font-size="22" fill="#0D1B3D" text-anchor="middle" xml:lang="bn">&#x09B8;&#x09A4;&#x09CD;&#x09AF;&#x09C7;&#x09B0; &#x0996;&#x09AC;&#x09B0;, &#x09B8;&#x09AC;&#x09BE;&#x09B0; &#x0986;&#x0997;&#x09C7;</text>
+  </g>
+  
+  <!-- Category Tags -->
+  <g transform="translate(100, 430)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-weight="700" font-size="16" fill="#0D1B3D" letter-spacing="3">NEWS</text>
+    <circle cx="80" cy="-5" r="3" fill="#E30613"/>
+    <text x="95" y="0" font-family="Arial, sans-serif" font-weight="700" font-size="16" fill="#0D1B3D" letter-spacing="3">FACT CHECK</text>
+    <circle cx="230" cy="-5" r="3" fill="#E30613"/>
+    <text x="245" y="0" font-family="Arial, sans-serif" font-weight="700" font-size="16" fill="#0D1B3D" letter-spacing="3">SYLHET FOCUS</text>
+  </g>
+  
+  <!-- Color Palette Section -->
+  <g transform="translate(50, 500)">
+    <text x="0" y="0" font-family="Arial" font-size="14" fill="#666" font-weight="bold">COLOR PALETTE</text>
+    
+    <!-- Color swatches -->
+    <rect x="0" y="15" width="60" height="60" rx="8" fill="#0D1B3D"/>
+    <text x="30" y="90" font-family="Arial" font-size="10" fill="#666" text-anchor="middle">#0D1B3D</text>
+    
+    <rect x="80" y="15" width="60" height="60" rx="8" fill="#E30613"/>
+    <text x="110" y="90" font-family="Arial" font-size="10" fill="#666" text-anchor="middle">#E30613</text>
+    
+    <rect x="160" y="15" width="60" height="60" rx="8" fill="#1E7A3A"/>
+    <text x="190" y="90" font-family="Arial" font-size="10" fill="#666" text-anchor="middle">#1E7A3A</text>
+    
+    <rect x="240" y="15" width="60" height="60" rx="8" fill="#E6E8EB"/>
+    <text x="270" y="90" font-family="Arial" font-size="10" fill="#666" text-anchor="middle">#E6E8EB</text>
+    
+    <rect x="320" y="15" width="60" height="60" rx="8" fill="#FFFFFF" stroke="#E6E8EB" stroke-width="1"/>
+    <text x="350" y="90" font-family="Arial" font-size="10" fill="#666" text-anchor="middle">#FFFFFF</text>
+  </g>
+  
+  <!-- Footer tagline -->
+  <g transform="translate(300, 670)">
+    <text x="0" y="0" font-family="Arial" font-size="12" fill="#666" text-anchor="middle" letter-spacing="1">SHOTTOFEED - YOUR TRUSTED NEWS PORTAL FOR SYLHET AND BEYOND</text>
+  </g>
+</svg>
