@@ -1,38 +1,161 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
+/**
+ * Verification Class
+ * Handles certificate verification via URL/QR code
+ */
 class DPDT_Verify {
-    
-    public static function get_verified_data($code) {
-        if (empty($code)) return null;
-        
-        $code = sanitize_text_field($code);
-        $app = DPDT_Application::get_application_by_code($code);
-        
-        if (!$app || $app->status !== 'approved') {
+
+    private $db;
+    private $security;
+
+    public function __construct() {
+        $this->db = new DPDT_Database();
+        $this->security = new DPDT_Security();
+    }
+
+    /**
+     * Render verify page shortcode
+     */
+    public function render_verify_page($atts = array()) {
+        $atts = shortcode_atts(array(
+            'title' => __('সার্টিফিকেট যাচাই', 'dpdt-trademark'),
+        ), $atts);
+
+        ob_start();
+        include DPDT_PLUGIN_DIR . 'templates/shortcodes/shortcode-verify.php';
+        return ob_get_clean();
+    }
+
+    /**
+     * Handle verify request from URL
+     */
+    public function handle_verify_request($token) {
+        $token = sanitize_text_field($token);
+        $result = $this->verify_certificate($token);
+
+        if ($result) {
+            set_query_var('dpdt_verify_result', $result);
+            set_query_var('dpdt_verify_status', 'valid');
+        } else {
+            set_query_var('dpdt_verify_status', 'invalid');
+        }
+    }
+
+    /**
+     * AJAX verification handler
+     */
+    public function ajax_verify() {
+        // Rate limiting
+        $ip = isset($_SERVER['REMOTE_ADDR']) ? sanitize_text_field($_SERVER['REMOTE_ADDR']) : '0.0.0.0';
+        if (!$this->security->check_rate_limit('verify_' . $ip, 10, 60)) {
+            wp_send_json_error(array('message' => __('অনেক বেশি অনুরোধ। ১ মিনিট পর চেষ্টা করুন।', 'dpdt-trademark')));
+        }
+
+        $token = isset($_POST['token']) ? sanitize_text_field($_POST['token']) : '';
+        $cert_number = isset($_POST['certificate_number']) ? sanitize_text_field($_POST['certificate_number']) : '';
+
+        if (empty($token) && empty($cert_number)) {
+            wp_send_json_error(array('message' => __('সার্টিফিকেট নম্বর বা টোকেন প্রদান করুন।', 'dpdt-trademark')));
+        }
+
+        $result = null;
+        if (!empty($token)) {
+            $result = $this->verify_by_token($token);
+        } elseif (!empty($cert_number)) {
+            $result = $this->verify_by_number($cert_number);
+        }
+
+        if ($result) {
+            wp_send_json_success(array(
+                'message' => __('সার্টিফিকেট যাচাই সম্পন্ন! এটি একটি বৈধ সার্টিফিকেট।', 'dpdt-trademark'),
+                'certificate' => $result,
+                'status' => 'verified',
+            ));
+        } else {
+            wp_send_json_error(array(
+                'message' => __('অবৈধ সার্টিফিকেট! এই তথ্য দিয়ে কোনো সার্টিফিকেট পাওয়া যায়নি।', 'dpdt-trademark'),
+                'status' => 'invalid',
+            ));
+        }
+    }
+
+    /**
+     * Verify by token
+     */
+    private function verify_by_token($token) {
+        $certificate = $this->db->get_certificate_by_token($token);
+        if (!$certificate) {
             return null;
         }
-        
-        return $app;
+
+        $application = $this->db->get_application_by_app_id($certificate->application_id);
+        return $this->format_verify_result($application, $certificate);
     }
-    
-    public static function render_verified_badge($app) {
-        if (!$app) return '';
-        
-        $output = '<div class="verify-success">';
-        $output .= '<div class="verify-badge"><i class="fas fa-check-circle"></i> Verified</div>';
-        $output .= '</div>';
-        
-        return $output;
-    }
-    
-    public static function get_qr_code_url($app) {
-        if (!empty($app->qr_code_url)) {
-            return $app->qr_code_url;
+
+    /**
+     * Verify by certificate number
+     */
+    private function verify_by_number($number) {
+        $application = $this->db->get_application_by_certificate($number);
+        if (!$application || $application->status !== 'approved') {
+            return null;
         }
-        
-        // Generate QR code URL using Google Charts API
-        $verify_url = !empty($app->verify_url) ? $app->verify_url : home_url('/verify/' . $app->app_code);
-        return 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' . urlencode($verify_url);
+
+        $certificate = $this->db->get_certificate_by_number($number);
+        return $this->format_verify_result($application, $certificate);
+    }
+
+    /**
+     * Verify certificate (general)
+     */
+    private function verify_certificate($token) {
+        return $this->verify_by_token($token);
+    }
+
+    /**
+     * Format verification result
+     */
+    private function format_verify_result($application, $certificate = null) {
+        if (!$application) return null;
+
+        $result = array(
+            'application_id' => $application->application_id,
+            'certificate_number' => $application->certificate_number,
+            'applicant_name' => $application->applicant_name,
+            'applicant_name_bn' => $application->applicant_name_bn,
+            'brand_name' => $application->brand_name,
+            'brand_name_bn' => $application->brand_name_bn,
+            'owner_name' => $application->owner_name,
+            'owner_name_bn' => $application->owner_name_bn,
+            'company_name' => $application->company_name,
+            'trademark_class' => $application->trademark_class,
+            'trademark_type' => $application->trademark_type,
+            'brand_logo_url' => $application->brand_logo_url,
+            'application_date' => $application->application_date,
+            'registration_date' => $application->registration_date,
+            'approved_date' => $application->approved_date,
+            'expiry_date' => $application->expiry_date,
+            'certificate_jpg_url' => $application->certificate_jpg_url,
+            'certificate_pdf_url' => $application->certificate_pdf_url,
+            'status' => $application->status,
+            'is_valid' => true,
+            'is_expired' => strtotime($application->expiry_date) < time(),
+        );
+
+        if ($certificate) {
+            $result['is_valid'] = (bool) $certificate->is_valid;
+            $result['revoked_at'] = $certificate->revoked_at;
+            $result['revoke_reason'] = $certificate->revoke_reason;
+        }
+
+        // Log verification
+        $this->db->log_activity(0, 'certificate_verified', 'certificate', 0, wp_json_encode(array(
+            'certificate_number' => $application->certificate_number,
+            'ip' => isset($_SERVER['REMOTE_ADDR']) ? sanitize_text_field($_SERVER['REMOTE_ADDR']) : '',
+        )));
+
+        return $result;
     }
 }

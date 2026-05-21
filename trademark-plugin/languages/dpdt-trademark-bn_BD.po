@@ -1,0 +1,61 @@
+# DPDT Trademark Plugin - Bengali Translation
+# Copyright (C) 2024 DPDT Development Team
+# This file is distributed under the GPL v2.
+msgid ""
+msgstr ""
+"Project-Id-Version: DPDT Trademark 3.5.0\n"
+"Report-Msgid-Bugs-To: https://dpdt.gov.bd\n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2024-01-01 00:00+0600\n"
+"Last-Translator: DPDT Team\n"
+"Language-Team: Bengali\n"
+"Language: bn_BD\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Trademark Cert"
+msgstr "ট্রেডমার্ক সার্টিফিকেট"
+
+msgid "Dashboard"
+msgstr "ড্যাশবোর্ড"
+
+msgid "Applications"
+msgstr "আবেদন সমূহ"
+
+msgid "Settings"
+msgstr "সেটিংস"
+
+msgid "Logo Settings"
+msgstr "লোগো সেটিংস"
+
+msgid "Categories"
+msgstr "ক্যাটাগরি"
+
+msgid "Apply"
+msgstr "আবেদন করুন"
+
+msgid "Verify"
+msgstr "যাচাই করুন"
+
+msgid "Approved"
+msgstr "অনুমোদিত"
+
+msgid "Pending"
+msgstr "অপেক্ষমাণ"
+
+msgid "Rejected"
+msgstr "প্রত্যাখ্যাত"
+
+msgid "Certificate Number"
+msgstr "সার্টিফিকেট নম্বর"
+
+msgid "Brand Name"
+msgstr "ব্র্যান্ডের নাম"
+
+msgid "Applicant Name"
+msgstr "আবেদনকারীর নাম"
+
+msgid "Since 2009"
+msgstr "২০০৯ থেকে"
