@@ -3,7 +3,7 @@
  * Plugin Name: DPDT Trademark Certificate System
  * Plugin URI: https://dpdt.gov.bd
  * Description: Complete Trademark Certificate Management System for Bangladesh Department of Patents, Designs and Trademarks (DPDT). Features: application management, certificate generation, QR verification, logo management, category pages, and full admin control.
- * Version: 3.5.0
+ * Version: 4.0.0
  * Author: DPDT Development Team
  * Author URI: https://dpdt.gov.bd
  * Text Domain: dpdt-trademark
@@ -17,12 +17,12 @@
 if (!defined('ABSPATH')) exit;
 
 // Plugin Constants
-define('DPDT_VERSION', '3.5.0');
+define('DPDT_VERSION', '4.0.0');
 define('DPDT_PLUGIN_FILE', __FILE__);
 define('DPDT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('DPDT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('DPDT_PLUGIN_BASENAME', plugin_basename(__FILE__));
-define('DPDT_DB_VERSION', '3.5.0');
+define('DPDT_DB_VERSION', '4.0.0');
 define('DPDT_MIN_PHP', '7.4');
 define('DPDT_MIN_WP', '5.8');
 define('DPDT_TEXT_DOMAIN', 'dpdt-trademark');
@@ -316,7 +316,7 @@ final class DPDT_Trademark_Plugin {
         wp_enqueue_script('dpdt-verify', DPDT_PLUGIN_URL . 'assets/js/verify.js', array('jquery'), DPDT_VERSION, true);
         wp_enqueue_script('dpdt-apply-form', DPDT_PLUGIN_URL . 'assets/js/apply-form.js', array('jquery'), DPDT_VERSION, true);
 
-        wp_localize_script('dpdt-plugin', 'dpdtAjax', array(
+        $localize_data = array(
             'ajaxurl' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce(DPDT_NONCE_ACTION),
             'verifyUrl' => get_option('dpdt_verify_base_url', home_url('/verify/')),
@@ -328,7 +328,11 @@ final class DPDT_Trademark_Plugin {
                 'verified' => __('সার্টিফিকেট যাচাই সম্পন্ন', 'dpdt-trademark'),
                 'invalid' => __('অবৈধ সার্টিফিকেট', 'dpdt-trademark'),
             ),
-        ));
+        );
+
+        wp_localize_script('dpdt-plugin', 'dpdtAjax', $localize_data);
+        wp_localize_script('dpdt-apply-form', 'dpdtAjax', $localize_data);
+        wp_localize_script('dpdt-verify', 'dpdtAjax', $localize_data);
     }
 
     public function enqueue_admin_assets($hook) {

@@ -1,20 +1,28 @@
 /**
  * DPDT Trademark Plugin - Application Form JavaScript
- * Version: 3.5.0
+ * Version: 4.0.0
  */
 (function($) {
     'use strict';
 
     var DPDTApplyForm = {
         init: function() {
+            this.form = $('#dpdt-application-form');
+            if (!this.form.length) return;
+
+            this.submitBtn = $('#dpdt-submit-btn');
             this.bindEvents();
             this.initFilePreview();
         },
 
         bindEvents: function() {
-            $('#dpdt-application-form').on('submit', this.handleSubmit.bind(this));
+            this.form.on('submit', this.handleSubmit.bind(this));
             // Real-time validation
-            $('#dpdt-application-form input[required], #dpdt-application-form select[required]').on('blur', this.validateField.bind(this));
+            this.form.find('input[required], select[required]').on('blur', this.validateField.bind(this));
+            // Remove error state on focus
+            this.form.find('input, select, textarea').on('focus', function() {
+                $(this).removeClass('error');
+            });
         },
 
         /**
@@ -23,27 +31,34 @@
         initFilePreview: function() {
             $('#brand_logo').on('change', function(e) {
                 var file = e.target.files[0];
-                if (!file) return;
+                var $preview = $('#brand-logo-preview');
+
+                if (!file) {
+                    $preview.html('');
+                    return;
+                }
 
                 // Validate file size (2MB max)
                 if (file.size > 2 * 1024 * 1024) {
-                    alert('ফাইল সাইজ 2MB এর বেশি হতে পারবে না।');
+                    DPDTApplyForm.showFormError('ফাইল সাইজ 2MB এর বেশি হতে পারবে না।');
                     $(this).val('');
+                    $preview.html('');
                     return;
                 }
 
                 // Validate file type
                 var allowed = ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'];
                 if (allowed.indexOf(file.type) === -1) {
-                    alert('শুধুমাত্র JPG, PNG, GIF, SVG ফাইল অনুমোদিত।');
+                    DPDTApplyForm.showFormError('শুধুমাত্র JPG, PNG, GIF, SVG ফাইল অনুমোদিত।');
                     $(this).val('');
+                    $preview.html('');
                     return;
                 }
 
                 // Show preview
                 var reader = new FileReader();
                 reader.onload = function(ev) {
-                    $('#brand-logo-preview').html('<img src="' + ev.target.result + '" alt="Logo Preview" />');
+                    $preview.html('<img src="' + ev.target.result + '" alt="Logo Preview" style="max-width:150px;max-height:150px;border:1px solid #ddd;padding:5px;border-radius:4px;" />');
                 };
                 reader.readAsDataURL(file);
             });
@@ -55,8 +70,7 @@
         handleSubmit: function(e) {
             e.preventDefault();
 
-            var $form = $('#dpdt-application-form');
-            var $btn = $('#dpdt-submit-btn');
+            var self = this;
 
             // Validate all required fields
             if (!this.validateAll()) {
@@ -64,22 +78,30 @@
             }
 
             // Check honeypot
-            if ($form.find('[name="dpdt_honeypot"]').val() !== '') {
+            if (this.form.find('[name="dpdt_honeypot"]').val() !== '') {
+                return false;
+            }
+
+            // Prevent double submit
+            if (this.submitBtn.prop('disabled')) {
                 return false;
             }
 
             // Show loading state
-            $btn.prop('disabled', true);
-            $btn.find('.dpdt-btn-text').hide();
-            $btn.find('.dpdt-btn-loading').show();
+            this.submitBtn.prop('disabled', true);
+            this.submitBtn.find('.dpdt-btn-text').hide();
+            this.submitBtn.find('.dpdt-btn-loading').show();
+
+            // Remove previous messages
+            $('.dpdt-form-error').remove();
 
             // Prepare form data
-            var formData = new FormData($form[0]);
+            var formData = new FormData(this.form[0]);
             formData.append('action', 'dpdt_submit_application');
 
             // Submit via AJAX
             $.ajax({
-                url: dpdtAjax.ajaxurl,
+                url: (typeof dpdtAjax !== 'undefined') ? dpdtAjax.ajaxurl : '/wp-admin/admin-ajax.php',
                 type: 'POST',
                 data: formData,
                 processData: false,
@@ -88,28 +110,43 @@
                 success: function(response) {
                     if (response.success) {
                         // Show success
-                        $form.fadeOut(300, function() {
-                            $('#dpdt-success-message').text(response.data.message);
+                        self.form.fadeOut(300, function() {
+                            var $success = $('#dpdt-form-success');
+                            $('#dpdt-success-message').text(response.data.message || 'আবেদন সফলভাবে জমা হয়েছে!');
                             $('#dpdt-success-details').text(response.data.details || '');
-                            $('#dpdt-form-success').fadeIn(300);
+                            if (response.data.application_id) {
+                                $('#dpdt-success-details').append('<br><strong>আবেদন নম্বর: ' + response.data.application_id + '</strong>');
+                            }
+                            $success.fadeIn(300);
+
+                            // Scroll to success message
+                            $('html, body').animate({
+                                scrollTop: $success.offset().top - 100
+                            }, 400);
                         });
                     } else {
-                        DPDTApplyForm.showFormError(response.data.message);
+                        self.showFormError(response.data.message || 'আবেদন জমা দিতে সমস্যা হয়েছে।');
                     }
                 },
                 error: function(xhr, status, error) {
-                    var msg = 'সার্ভারে সমস্যা হয়েছে।';
+                    var msg = 'সার্ভারে সমস্যা হয়েছে। পুনরায় চেষ্টা করুন।';
                     if (status === 'timeout') {
                         msg = 'অনুরোধ সময়সীমা অতিক্রম করেছে। আবার চেষ্টা করুন।';
+                    } else if (xhr.status === 0) {
+                        msg = 'ইন্টারনেট সংযোগ নেই। সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।';
+                    } else if (xhr.status === 403) {
+                        msg = 'অনুমতি অস্বীকৃত। পেজ রিফ্রেশ করে আবার চেষ্টা করুন।';
                     }
-                    DPDTApplyForm.showFormError(msg);
+                    self.showFormError(msg);
                 },
                 complete: function() {
-                    $btn.prop('disabled', false);
-                    $btn.find('.dpdt-btn-text').show();
-                    $btn.find('.dpdt-btn-loading').hide();
+                    self.submitBtn.prop('disabled', false);
+                    self.submitBtn.find('.dpdt-btn-text').show();
+                    self.submitBtn.find('.dpdt-btn-loading').hide();
                 }
             });
+
+            return false;
         },
 
         /**
@@ -117,7 +154,7 @@
          */
         validateField: function(e) {
             var $field = $(e.target);
-            var value = $field.val().trim();
+            var value = $field.val() ? $field.val().trim() : '';
             var isValid = true;
 
             if ($field.prop('required') && !value) {
@@ -150,11 +187,12 @@
          */
         validateAll: function() {
             var isValid = true;
-            var $form = $('#dpdt-application-form');
+            var self = this;
 
-            $form.find('input[required], select[required]').each(function() {
+            this.form.find('input[required], select[required]').each(function() {
                 var $field = $(this);
-                if (!$field.val().trim()) {
+                var value = $field.val() ? $field.val().trim() : '';
+                if (!value) {
                     $field.addClass('error');
                     isValid = false;
                 } else {
@@ -162,10 +200,30 @@
                 }
             });
 
+            // Specific email validation
+            var $email = this.form.find('input[type="email"]');
+            if ($email.length && $email.val()) {
+                var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test($email.val().trim())) {
+                    $email.addClass('error');
+                    isValid = false;
+                }
+            }
+
+            // Specific phone validation
+            var $phone = this.form.find('input[type="tel"]');
+            if ($phone.length && $phone.val() && $phone.prop('required')) {
+                var phone = $phone.val().replace(/[^0-9+]/g, '');
+                if (phone.length < 10 || phone.length > 15) {
+                    $phone.addClass('error');
+                    isValid = false;
+                }
+            }
+
             if (!isValid) {
-                this.showFormError('সকল প্রয়োজনীয় ঘর পূরণ করুন।');
+                this.showFormError('সকল প্রয়োজনীয় ঘর সঠিকভাবে পূরণ করুন।');
                 // Scroll to first error
-                var $firstError = $form.find('.error').first();
+                var $firstError = this.form.find('.error').first();
                 if ($firstError.length) {
                     $('html, body').animate({
                         scrollTop: $firstError.offset().top - 100
@@ -183,17 +241,17 @@
             // Remove existing error
             $('.dpdt-form-error').remove();
 
-            var $error = $('<div class="dpdt-form-notice dpdt-form-error" style="background:#fdedec;border:1px solid #f5b7b1;color:#c0392b;"><span class="dashicons dashicons-warning"></span><p>' + message + '</p></div>');
-            $('#dpdt-application-form').prepend($error);
+            var $error = $('<div class="dpdt-form-notice dpdt-form-error" style="background:#fdedec;border:1px solid #f5b7b1;color:#c0392b;padding:12px 15px;border-radius:4px;margin-bottom:15px;display:flex;align-items:center;gap:8px;"><span class="dashicons dashicons-warning" style="font-size:18px;"></span><p style="margin:0;">' + message + '</p></div>');
+            this.form.prepend($error);
 
-            // Auto-remove after 5s
+            // Auto-remove after 8s
             setTimeout(function() {
                 $error.fadeOut(300, function() { $(this).remove(); });
-            }, 5000);
+            }, 8000);
 
             // Scroll to top of form
             $('html, body').animate({
-                scrollTop: $('#dpdt-application-form').offset().top - 50
+                scrollTop: this.form.offset().top - 50
             }, 400);
         }
     };
