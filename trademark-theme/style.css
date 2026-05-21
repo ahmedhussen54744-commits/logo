@@ -1,12 +1,53 @@
 /*
-Theme Name: DPDT Trademark Certificate System
+Theme Name: DPDT Trademark Theme
 Theme URI: https://dpdt.gov.bd
-Description: Advanced Trademark Certificate Management System - Department of Patents, Designs and Trademarks, Bangladesh. Built with security and modern design.
-Version: 2.0.0
 Author: DPDT Development Team
 Author URI: https://dpdt.gov.bd
+Description: Official theme for the Department of Patents, Designs and Trademarks (DPDT) Bangladesh. Features responsive design, government-style layout, wp_nav_menu integration, customizer options, widget areas, and full compatibility with the DPDT Trademark Plugin.
+Version: 3.5.0
+Requires at least: 5.8
+Tested up to: 6.4
+Requires PHP: 7.4
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: dpdt-trademark
-Since: 2009
+Text Domain: dpdt-theme
+Tags: government, bangla, responsive, custom-menu, custom-logo, featured-images, full-width-template, translation-ready
 */
+
+/* Base Reset - Minimal reset, most styles in assets/css/ */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans Bengali', 'Hind Siliguri', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #333;
+    background: #f5f5f5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    color: #1a5276;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #2980b9;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.3;
+    color: #1a5276;
+}

@@ -1,0 +1,233 @@
+/**
+ * DPDT Trademark - Verify Page Styles
+ * Version: 3.5.0
+ */
+
+.dpdt-verify-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.dpdt-verify-title {
+    text-align: center;
+    color: #1a5276;
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+}
+
+/* Search Form */
+.dpdt-verify-search {
+    margin-bottom: 30px;
+}
+
+.dpdt-verify-input-group {
+    display: flex;
+    gap: 0;
+    border: 2px solid #1a5276;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(26, 82, 118, 0.1);
+}
+
+.dpdt-verify-input-group input {
+    flex: 1;
+    padding: 14px 20px;
+    border: none;
+    font-size: 1rem;
+    outline: none;
+}
+
+.dpdt-verify-input-group input:focus {
+    background: #f8fbff;
+}
+
+.dpdt-verify-input-group .dpdt-btn {
+    border-radius: 0;
+    padding: 14px 28px;
+    white-space: nowrap;
+}
+
+.dpdt-verify-hint {
+    text-align: center;
+    color: #888;
+    font-size: 0.85rem;
+    margin-top: 8px;
+}
+
+/* Result Card */
+.dpdt-verify-card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    animation: dpdt-fadeIn 0.5s ease;
+}
+
+@keyframes dpdt-fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.dpdt-verify-badge {
+    text-align: center;
+    padding: 30px;
+    color: #fff;
+}
+
+.dpdt-verified .dpdt-verify-badge {
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+}
+
+.dpdt-invalid .dpdt-verify-badge,
+.dpdt-badge-invalid {
+    background: linear-gradient(135deg, #c0392b, #e74c3c);
+}
+
+.dpdt-verified-icon,
+.dpdt-invalid-icon {
+    display: inline-flex;
+    width: 60px;
+    height: 60px;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    border: 3px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    margin-bottom: 12px;
+}
+
+.dpdt-verify-badge h3 {
+    margin: 0 0 8px;
+    font-size: 1.4rem;
+}
+
+.dpdt-verified-text,
+.dpdt-invalid-text {
+    margin: 0;
+    opacity: 0.9;
+}
+
+/* Logo Section */
+.dpdt-verify-logo-section {
+    text-align: center;
+    padding: 24px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.dpdt-verify-brand-logo {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    border: 3px solid #1a5276;
+    border-radius: 12px;
+    padding: 8px;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dpdt-verify-brand-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.dpdt-verify-brand-name {
+    margin: 12px 0 0;
+    font-weight: 700;
+    color: #1a5276;
+    font-size: 1.1rem;
+}
+
+/* Certificate Image */
+.dpdt-verify-certificate-img {
+    text-align: center;
+    padding: 20px;
+    background: #fff;
+}
+
+.dpdt-verify-certificate-img img {
+    max-width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Details Table */
+.dpdt-verify-details {
+    padding: 0;
+}
+
+.dpdt-verify-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.dpdt-verify-table tr {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.dpdt-verify-table tr:last-child {
+    border-bottom: none;
+}
+
+.dpdt-verify-table th {
+    text-align: left;
+    padding: 12px 20px;
+    color: #1a5276;
+    font-weight: 600;
+    width: 40%;
+    background: #fafafa;
+    font-size: 0.9rem;
+}
+
+.dpdt-verify-table td {
+    padding: 12px 20px;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+/* Footer */
+.dpdt-verify-footer {
+    text-align: center;
+    padding: 16px;
+    background: #f8f9fa;
+    border-top: 1px solid #e8e8e8;
+}
+
+.dpdt-verify-footer p {
+    margin: 4px 0;
+    color: #888;
+    font-size: 0.85rem;
+}
+
+.dpdt-verify-disclaimer {
+    font-weight: 600;
+    color: #1a5276 !important;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .dpdt-verify-input-group {
+        flex-direction: column;
+    }
+
+    .dpdt-verify-input-group .dpdt-btn {
+        border-radius: 0;
+    }
+
+    .dpdt-verify-table th,
+    .dpdt-verify-table td {
+        display: block;
+        width: 100%;
+        padding: 8px 20px;
+    }
+
+    .dpdt-verify-table th {
+        padding-bottom: 4px;
+    }
+
+    .dpdt-verify-table td {
+        padding-top: 0;
+        padding-bottom: 12px;
+    }
+}

@@ -1,128 +1,172 @@
 /**
- * DPDT Trademark System - Main JavaScript
- * Since: 2009 | Advanced Interactive Features
+ * DPDT Theme - Main JavaScript
+ * Version: 3.5.0
  */
-
-(function() {
+(function($) {
     'use strict';
 
-    // ===== SLIDER =====
-    const slider = {
-        slides: document.querySelectorAll('.hero-slide'),
-        indicators: document.querySelector('.slider-indicators'),
-        current: 0,
-        interval: null,
-
-        init() {
-            if (!this.slides.length) return;
-            this.createDots();
-            this.start();
-            this.bindEvents();
+    var DPDTTheme = {
+        init: function() {
+            this.initScrollEffects();
+            this.initAccordions();
+            this.initBackToTop();
+            this.initLazyLoad();
         },
 
-        createDots() {
-            if (!this.indicators) return;
-            this.slides.forEach((_, i) => {
-                const dot = document.createElement('span');
-                if (i === 0) dot.classList.add('active');
-                dot.addEventListener('click', () => this.goTo(i));
-                this.indicators.appendChild(dot);
-            });
-        },
+        /**
+         * Scroll effects - sticky header, animations
+         */
+        initScrollEffects: function() {
+            var $header = $('.site-header');
+            var lastScroll = 0;
 
-        goTo(index) {
-            this.slides[this.current].classList.remove('active');
-            const dots = this.indicators?.querySelectorAll('span');
-            if (dots) dots[this.current]?.classList.remove('active');
-            this.current = index;
-            this.slides[this.current].classList.add('active');
-            if (dots) dots[this.current]?.classList.add('active');
-        },
+            $(window).on('scroll', function() {
+                var currentScroll = $(window).scrollTop();
 
-        next() { this.goTo((this.current + 1) % this.slides.length); },
-        prev() { this.goTo((this.current - 1 + this.slides.length) % this.slides.length); },
-        start() { this.interval = setInterval(() => this.next(), 5000); },
-        stop() { clearInterval(this.interval); },
-
-        bindEvents() {
-            const prevBtn = document.querySelector('.slider-nav.prev');
-            const nextBtn = document.querySelector('.slider-nav.next');
-            if (prevBtn) prevBtn.addEventListener('click', () => { this.stop(); this.prev(); this.start(); });
-            if (nextBtn) nextBtn.addEventListener('click', () => { this.stop(); this.next(); this.start(); });
-        }
-    };
-
-    // ===== MOBILE MENU =====
-    const mobileMenu = {
-        init() {
-            const toggle = document.querySelector('.mobile-toggle');
-            const nav = document.querySelector('.nav-list');
-            if (!toggle || !nav) return;
-            toggle.addEventListener('click', () => nav.classList.toggle('active'));
-            document.addEventListener('click', (e) => {
-                if (!nav.contains(e.target) && !toggle.contains(e.target)) {
-                    nav.classList.remove('active');
+                if (currentScroll > 100) {
+                    $header.addClass('header-scrolled');
+                } else {
+                    $header.removeClass('header-scrolled');
                 }
-            });
-        }
-    };
 
-    // ===== BACK TO TOP =====
-    const backToTop = {
-        init() {
-            const btn = document.querySelector('.back-to-top');
-            if (!btn) return;
-            window.addEventListener('scroll', () => {
-                btn.classList.toggle('visible', window.scrollY > 300);
+                lastScroll = currentScroll;
             });
-            btn.addEventListener('click', () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        }
-    };
 
-    // ===== COUNTER ANIMATION =====
-    const counters = {
-        animated: false,
-        init() {
-            const section = document.querySelector('.stats-section');
-            if (!section) return;
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && !this.animated) {
-                        this.animated = true;
-                        this.animate();
+            // Animate elements on scroll
+            var observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('dpdt-visible');
+                        observer.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.4 });
-            observer.observe(section);
-        },
-        animate() {
-            document.querySelectorAll('.stat-box .number').forEach(el => {
-                const target = parseInt(el.dataset.target) || 0;
-                const duration = 2000;
-                const step = target / (duration / 16);
-                let current = 0;
-                const update = () => {
-                    current += step;
-                    if (current < target) {
-                        el.textContent = Math.floor(current).toLocaleString('bn-BD');
-                        requestAnimationFrame(update);
-                    } else {
-                        el.textContent = target.toLocaleString('bn-BD');
-                    }
-                };
-                update();
+            }, observerOptions);
+
+            document.querySelectorAll('.dpdt-service-card, .link-card, .post-card, .section-card').forEach(function(el) {
+                el.classList.add('dpdt-animate');
+                observer.observe(el);
             });
+        },
+
+        /**
+         * Accordions
+         */
+        initAccordions: function() {
+            $(document).on('click', '.dpdt-accordion-header', function() {
+                var $item = $(this).closest('.dpdt-accordion-item');
+                var isActive = $item.hasClass('active');
+
+                // Close all
+                $item.siblings().removeClass('active').find('.dpdt-accordion-body').slideUp(300);
+
+                // Toggle current
+                if (!isActive) {
+                    $item.addClass('active').find('.dpdt-accordion-body').slideDown(300);
+                } else {
+                    $item.removeClass('active').find('.dpdt-accordion-body').slideUp(300);
+                }
+            });
+        },
+
+        /**
+         * Back to top button
+         */
+        initBackToTop: function() {
+            var $btn = $('<button id="dpdt-back-to-top" class="dpdt-back-to-top" aria-label="Back to top"><span class="dashicons dashicons-arrow-up-alt2"></span></button>');
+            $('body').append($btn);
+
+            $(window).on('scroll', function() {
+                if ($(window).scrollTop() > 400) {
+                    $btn.addClass('visible');
+                } else {
+                    $btn.removeClass('visible');
+                }
+            });
+
+            $btn.on('click', function() {
+                $('html, body').animate({ scrollTop: 0 }, 500);
+            });
+        },
+
+        /**
+         * Lazy load images
+         */
+        initLazyLoad: function() {
+            if ('IntersectionObserver' in window) {
+                var lazyImages = document.querySelectorAll('img[data-src]');
+                var imageObserver = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            var img = entry.target;
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                            imageObserver.unobserve(img);
+                        }
+                    });
+                });
+
+                lazyImages.forEach(function(img) {
+                    imageObserver.observe(img);
+                });
+            }
         }
     };
 
-    // ===== INIT ALL =====
-    document.addEventListener('DOMContentLoaded', () => {
-        slider.init();
-        mobileMenu.init();
-        backToTop.init();
-        counters.init();
+    $(document).ready(function() {
+        DPDTTheme.init();
     });
 
+})(jQuery);
+
+/* Add inline style for back-to-top and animations */
+(function() {
+    var style = document.createElement('style');
+    style.textContent = `
+        .dpdt-back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 44px;
+            height: 44px;
+            background: var(--dpdt-primary);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .dpdt-back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .dpdt-back-to-top:hover {
+            background: var(--dpdt-secondary);
+            transform: translateY(-3px);
+        }
+        .dpdt-animate {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .dpdt-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .header-scrolled {
+            box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+        }
+    `;
+    document.head.appendChild(style);
 })();
