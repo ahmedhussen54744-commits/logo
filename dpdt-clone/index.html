@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>পেটেন্ট, ডিজাইন ও ট্রেডমার্কস অধিদপ্তর</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Top Bar -->
@@ -14,6 +14,7 @@
         <div class="container">
             <div class="top-bar-left">
                 <span><i class="fas fa-calendar-alt"></i> ০৬ জ্যৈষ্ঠ ১৪৩৩, বৃহস্পতিবার, ২১ মে ২০২৬</span>
+                <span><i class="fas fa-phone"></i> +৮৮-০২-৫৫০০০০০০</span>
             </div>
             <div class="top-bar-right">
                 <a href="#" class="lang-switch active">বাংলা</a>
@@ -48,7 +49,8 @@
         </div>
     </header>
 
-    <!-- Navigation -->
+
+    <!-- Navigation - All Categories from dpdt.gov.bd -->
     <nav class="main-nav">
         <div class="container">
             <button class="mobile-menu-btn" id="mobileMenuBtn">
@@ -59,47 +61,95 @@
                 <li class="has-dropdown">
                     <a href="#">আমাদের সম্পর্কে <i class="fas fa-caret-down"></i></a>
                     <ul class="dropdown">
-                        <li><a href="#">প্রতিষ্ঠান পরিচিতি</a></li>
-                        <li><a href="#">ইতিহাস ও কার্যক্রম</a></li>
-                        <li><a href="#">সাংগঠনিক কাঠামো</a></li>
-                        <li><a href="#">কর্মকর্তাবৃন্দ</a></li>
-                        <li><a href="#">কর্মচারীবৃন্দ</a></li>
+                        <li><a href="#about-intro">প্রতিষ্ঠান পরিচিতি</a></li>
+                        <li><a href="#about-history">ইতিহাস ও কার্যক্রম</a></li>
+                        <li><a href="#about-org">সাংগঠনিক কাঠামো</a></li>
+                        <li><a href="#about-officers">কর্মকর্তাবৃন্দ</a></li>
+                        <li><a href="#about-staff">কর্মচারীবৃন্দ</a></li>
+                        <li><a href="#about-organogram">অর্গানোগ্রাম</a></li>
+                        <li><a href="#about-mission">মিশন ও ভিশন</a></li>
+                        <li><a href="#about-citizen">সিটিজেন চার্টার</a></li>
                     </ul>
                 </li>
                 <li class="has-dropdown">
                     <a href="#">সেবাসমূহ <i class="fas fa-caret-down"></i></a>
                     <ul class="dropdown">
-                        <li><a href="#">পেটেন্ট নিবন্ধন</a></li>
-                        <li><a href="#">ডিজাইন নিবন্ধন</a></li>
-                        <li><a href="#">ট্রেডমার্ক নিবন্ধন</a></li>
-                        <li><a href="#">অনলাইন আবেদন</a></li>
-                        <li><a href="#">ফি তালিকা</a></li>
+                        <li><a href="#svc-patent">পেটেন্ট নিবন্ধন</a></li>
+                        <li><a href="#svc-design">ডিজাইন নিবন্ধন</a></li>
+                        <li><a href="#svc-trademark">ট্রেডমার্ক নিবন্ধন</a></li>
+                        <li><a href="#svc-gi">জিআই নিবন্ধন</a></li>
+                        <li><a href="#svc-online">অনলাইন আবেদন</a></li>
+                        <li><a href="#svc-fee">ফি তালিকা</a></li>
+                        <li><a href="#svc-citizen">নাগরিক সেবা</a></li>
+                        <li><a href="#svc-promise">সেবা প্রদান প্রতিশ্রুতি</a></li>
                     </ul>
                 </li>
                 <li class="has-dropdown">
                     <a href="#">আইন ও বিধি <i class="fas fa-caret-down"></i></a>
                     <ul class="dropdown">
-                        <li><a href="#">পেটেন্ট ও ডিজাইন আইন</a></li>
-                        <li><a href="#">ট্রেডমার্কস আইন</a></li>
-                        <li><a href="#">বিধিমালা</a></li>
-                        <li><a href="#">পরিপত্র/নির্দেশিকা</a></li>
+                        <li><a href="#law-patent">পেটেন্ট ও ডিজাইন আইন, ১৯১১</a></li>
+                        <li><a href="#law-trademark">ট্রেডমার্কস আইন, ২০০৯</a></li>
+                        <li><a href="#law-gi">ভৌগোলিক নির্দেশক পণ্য আইন, ২০১৩</a></li>
+                        <li><a href="#law-rules">বিধিমালা</a></li>
+                        <li><a href="#law-circular">পরিপত্র/নির্দেশিকা</a></li>
+                        <li><a href="#law-gazette">গেজেট</a></li>
                     </ul>
                 </li>
                 <li class="has-dropdown">
-                    <a href="#">ফরম/ডাউনলোড <i class="fas fa-caret-down"></i></a>
+                    <a href="#">প্রকাশনা <i class="fas fa-caret-down"></i></a>
                     <ul class="dropdown">
-                        <li><a href="#">পেটেন্ট ফরম</a></li>
-                        <li><a href="#">ডিজাইন ফরম</a></li>
-                        <li><a href="#">ট্রেডমার্ক ফরম</a></li>
-                        <li><a href="#">অন্যান্য ফরম</a></li>
+                        <li><a href="#pub-journal">ট্রেডমার্ক জার্নাল</a></li>
+                        <li><a href="#pub-annual">বার্ষিক প্রতিবেদন</a></li>
+                        <li><a href="#pub-press">প্রেস রিলিজ</a></li>
+                        <li><a href="#pub-newsletter">নিউজলেটার</a></li>
+                        <li><a href="#pub-research">গবেষণা পত্র</a></li>
                     </ul>
                 </li>
-                <li><a href="#">নোটিশ বোর্ড</a></li>
-                <li><a href="#">ট্রেডমার্ক জার্নাল</a></li>
-                <li><a href="#">যোগাযোগ</a></li>
+                <li class="has-dropdown">
+                    <a href="#">ফরম ও ডাউনলোড <i class="fas fa-caret-down"></i></a>
+                    <ul class="dropdown">
+                        <li><a href="#form-patent">পেটেন্ট ফরম</a></li>
+                        <li><a href="#form-design">ডিজাইন ফরম</a></li>
+                        <li><a href="#form-trademark">ট্রেডমার্ক ফরম</a></li>
+                        <li><a href="#form-gi">জিআই ফরম</a></li>
+                        <li><a href="#form-other">অন্যান্য ফরম</a></li>
+                        <li><a href="#form-manual">ম্যানুয়াল/নির্দেশিকা</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown">
+                    <a href="#">তথ্য ভান্ডার <i class="fas fa-caret-down"></i></a>
+                    <ul class="dropdown">
+                        <li><a href="#db-trademark">ট্রেডমার্ক ডাটাবেস</a></li>
+                        <li><a href="#db-patent">পেটেন্ট ডাটাবেস</a></li>
+                        <li><a href="#db-design">ডিজাইন ডাটাবেস</a></li>
+                        <li><a href="#db-stats">পরিসংখ্যান</a></li>
+                        <li><a href="#db-wipo">WIPO ডাটা</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown">
+                    <a href="#">ই-সেবা <i class="fas fa-caret-down"></i></a>
+                    <ul class="dropdown">
+                        <li><a href="#esvc-apply">অনলাইন আবেদন</a></li>
+                        <li><a href="#esvc-status">আবেদনের অবস্থা</a></li>
+                        <li><a href="#esvc-verify">সার্টিফিকেট যাচাই</a></li>
+                        <li><a href="#esvc-payment">ই-পেমেন্ট</a></li>
+                        <li><a href="#esvc-complaint">অভিযোগ দাখিল (GRS)</a></li>
+                        <li><a href="#esvc-rti">তথ্য অধিকার আবেদন</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown">
+                    <a href="#">গ্যালারি <i class="fas fa-caret-down"></i></a>
+                    <ul class="dropdown">
+                        <li><a href="#gallery-photo">ফটো গ্যালারি</a></li>
+                        <li><a href="#gallery-video">ভিডিও গ্যালারি</a></li>
+                    </ul>
+                </li>
+                <li><a href="#notice">নোটিশ বোর্ড</a></li>
+                <li><a href="#contact">যোগাযোগ</a></li>
             </ul>
         </div>
     </nav>
+
 
     <!-- Hero Slider -->
     <section class="hero-slider">
@@ -113,9 +163,9 @@
             </div>
             <div class="slide" style="background: linear-gradient(135deg, #1a5276 0%, #154360 100%);">
                 <div class="slide-content">
-                    <h2>অনলাইনে ট্রেডমার্ক আবেদন করুন</h2>
-                    <p>দ্রুত ও সহজে ট্রেডমার্ক নিবন্ধন সেবা পান</p>
-                    <a href="#" class="slider-btn">আবেদন করুন</a>
+                    <h2>অনলাইনে ট্রেডমার্ক সার্টিফিকেট আবেদন করুন</h2>
+                    <p>দ্রুত ও নিরাপদে ট্রেডমার্ক নিবন্ধন সেবা পান</p>
+                    <a href="#" class="slider-btn">এখনই আবেদন করুন</a>
                 </div>
             </div>
             <div class="slide" style="background: linear-gradient(135deg, #7d3c98 0%, #5b2c6f 100%);">
@@ -125,52 +175,93 @@
                     <a href="#" class="slider-btn">বিস্তারিত</a>
                 </div>
             </div>
+            <div class="slide" style="background: linear-gradient(135deg, #d35400 0%, #c0392b 100%);">
+                <div class="slide-content">
+                    <h2>সার্টিফিকেট যাচাই করুন</h2>
+                    <p>QR কোড বা রেজিস্ট্রেশন নম্বর দিয়ে যাচাই করুন</p>
+                    <a href="#" class="slider-btn">যাচাই করুন</a>
+                </div>
+            </div>
         </div>
         <button class="slider-btn-prev" id="sliderPrev"><i class="fas fa-chevron-left"></i></button>
         <button class="slider-btn-next" id="sliderNext"><i class="fas fa-chevron-right"></i></button>
         <div class="slider-dots" id="sliderDots"></div>
     </section>
 
-    <!-- Quick Links / Services -->
+
+    <!-- আমাদের সেবাসমূহ - All Service Categories -->
     <section class="quick-services">
         <div class="container">
+            <h2 class="section-title">আমাদের সেবাসমূহ</h2>
+            <div class="section-divider"></div>
             <div class="services-grid">
-                <a href="#" class="service-card">
+                <a href="#svc-patent" class="service-card">
                     <div class="service-icon"><i class="fas fa-lightbulb"></i></div>
                     <h3>পেটেন্ট নিবন্ধন</h3>
                     <p>উদ্ভাবন সুরক্ষিত করুন</p>
                 </a>
-                <a href="#" class="service-card">
+                <a href="#svc-design" class="service-card">
                     <div class="service-icon"><i class="fas fa-pencil-ruler"></i></div>
                     <h3>ডিজাইন নিবন্ধন</h3>
-                    <p>শিল্প-নকশা নিবন্ধন করুন</p>
+                    <p>শিল্প-নকশা সুরক্ষা</p>
                 </a>
-                <a href="#" class="service-card">
+                <a href="#svc-trademark" class="service-card">
                     <div class="service-icon"><i class="fas fa-trademark"></i></div>
                     <h3>ট্রেডমার্ক নিবন্ধন</h3>
                     <p>ব্র্যান্ড সুরক্ষিত করুন</p>
                 </a>
-                <a href="#" class="service-card">
-                    <div class="service-icon"><i class="fas fa-laptop"></i></div>
+                <a href="#svc-gi" class="service-card">
+                    <div class="service-icon"><i class="fas fa-globe-asia"></i></div>
+                    <h3>জিআই নিবন্ধন</h3>
+                    <p>ভৌগোলিক নির্দেশক</p>
+                </a>
+                <a href="#esvc-apply" class="service-card">
+                    <div class="service-icon"><i class="fas fa-laptop-code"></i></div>
                     <h3>অনলাইন আবেদন</h3>
                     <p>ই-ফাইলিং সিস্টেম</p>
                 </a>
-                <a href="#" class="service-card">
+                <a href="#db-trademark" class="service-card">
                     <div class="service-icon"><i class="fas fa-search"></i></div>
                     <h3>ট্রেডমার্ক অনুসন্ধান</h3>
                     <p>ডাটাবেসে খুঁজুন</p>
                 </a>
-                <a href="#" class="service-card">
-                    <div class="service-icon"><i class="fas fa-book"></i></div>
+                <a href="#esvc-verify" class="service-card">
+                    <div class="service-icon"><i class="fas fa-check-circle"></i></div>
+                    <h3>সার্টিফিকেট যাচাই</h3>
+                    <p>অনলাইন ভেরিফিকেশন</p>
+                </a>
+                <a href="#pub-journal" class="service-card">
+                    <div class="service-icon"><i class="fas fa-book-open"></i></div>
                     <h3>ট্রেডমার্ক জার্নাল</h3>
                     <p>সাম্প্রতিক প্রকাশনা</p>
+                </a>
+                <a href="#svc-fee" class="service-card">
+                    <div class="service-icon"><i class="fas fa-money-bill-wave"></i></div>
+                    <h3>ফি তালিকা</h3>
+                    <p>সেবামূল্য জানুন</p>
+                </a>
+                <a href="#form-trademark" class="service-card">
+                    <div class="service-icon"><i class="fas fa-file-download"></i></div>
+                    <h3>ফরম ডাউনলোড</h3>
+                    <p>প্রয়োজনীয় ফরম</p>
+                </a>
+                <a href="#esvc-complaint" class="service-card">
+                    <div class="service-icon"><i class="fas fa-headset"></i></div>
+                    <h3>অভিযোগ দাখিল</h3>
+                    <p>GRS সিস্টেম</p>
+                </a>
+                <a href="#esvc-status" class="service-card">
+                    <div class="service-icon"><i class="fas fa-tasks"></i></div>
+                    <h3>আবেদনের অবস্থা</h3>
+                    <p>ট্র্যাকিং করুন</p>
                 </a>
             </div>
         </div>
     </section>
 
+
     <!-- Main Content Area -->
-    <section class="main-content">
+    <section class="main-content" id="notice">
         <div class="container">
             <div class="content-grid">
                 <!-- Notice Board -->
@@ -181,36 +272,15 @@
                     </div>
                     <div class="box-body">
                         <ul class="notice-list">
-                            <li>
-                                <span class="notice-date">১৮/০৫/২০২৬</span>
-                                <a href="#">ট্রেডমার্ক নবায়ন সংক্রান্ত জরুরি বিজ্ঞপ্তি</a>
-                                <span class="badge new">নতুন</span>
-                            </li>
-                            <li>
-                                <span class="notice-date">১৫/০৫/২০২৬</span>
-                                <a href="#">পেটেন্ট আবেদনের জন্য নতুন ফি কাঠামো</a>
-                                <span class="badge new">নতুন</span>
-                            </li>
-                            <li>
-                                <span class="notice-date">১০/০৫/২০২৬</span>
-                                <a href="#">বার্ষিক প্রতিবেদন ২০২৫-২৬ প্রকাশ</a>
-                            </li>
-                            <li>
-                                <span class="notice-date">০৫/০৫/২০২৬</span>
-                                <a href="#">ট্রেডমার্ক জার্নাল (মে ২০২৬ সংখ্যা) প্রকাশিত</a>
-                            </li>
-                            <li>
-                                <span class="notice-date">০১/০৫/২০২৬</span>
-                                <a href="#">মেধাসম্পদ দিবস উদযাপন উপলক্ষে সেমিনার আয়োজন</a>
-                            </li>
-                            <li>
-                                <span class="notice-date">২৫/০৪/২০২৬</span>
-                                <a href="#">নিয়োগ বিজ্ঞপ্তি - উপ-সহকারী পরীক্ষক পদে নিয়োগ</a>
-                            </li>
+                            <li><span class="notice-date">২০/০৫/২০২৬</span><a href="#">ট্রেডমার্ক নবায়ন সংক্রান্ত জরুরি বিজ্ঞপ্তি</a><span class="badge new">নতুন</span></li>
+                            <li><span class="notice-date">১৫/০৫/২০২৬</span><a href="#">অনলাইন সার্টিফিকেট যাচাই সিস্টেম চালু</a><span class="badge new">নতুন</span></li>
+                            <li><span class="notice-date">১০/০৫/২০২৬</span><a href="#">পেটেন্ট আবেদনের নতুন ফি কাঠামো কার্যকর</a></li>
+                            <li><span class="notice-date">০৫/০৫/২০২৬</span><a href="#">বার্ষিক প্রতিবেদন ২০২৫-২৬ প্রকাশিত</a></li>
+                            <li><span class="notice-date">০১/০৫/২০২৬</span><a href="#">মেধাসম্পদ দিবস উদযাপন সেমিনার আয়োজন</a></li>
+                            <li><span class="notice-date">২৬/০৪/২০২৬</span><a href="#">নিয়োগ বিজ্ঞপ্তি - পরীক্ষক পদে নিয়োগ</a></li>
                         </ul>
                     </div>
                 </div>
-
                 <!-- Recent Activities -->
                 <div class="content-box recent-activities">
                     <div class="box-header">
@@ -219,34 +289,16 @@
                     </div>
                     <div class="box-body">
                         <div class="activity-item">
-                            <div class="activity-img">
-                                <i class="fas fa-image fa-3x" style="color: #ccc;"></i>
-                            </div>
-                            <div class="activity-text">
-                                <h4>বিশ্ব মেধাসম্পদ দিবস ২০২৬ উদযাপন</h4>
-                                <p>২৬ এপ্রিল ২০২৬ তারিখে বিশ্ব মেধাসম্পদ দিবস উদযাপন করা হয়েছে...</p>
-                                <span class="date">২৬ এপ্রিল ২০২৬</span>
-                            </div>
+                            <div class="activity-img"><i class="fas fa-image fa-3x" style="color:#ccc"></i></div>
+                            <div class="activity-text"><h4>বিশ্ব মেধাসম্পদ দিবস ২০২৬ উদযাপন</h4><p>২৬ এপ্রিল ২০২৬ তারিখে বিশ্ব মেধাসম্পদ দিবস উদযাপন করা হয়েছে...</p><span class="date">২৬ এপ্রিল ২০২৬</span></div>
                         </div>
                         <div class="activity-item">
-                            <div class="activity-img">
-                                <i class="fas fa-image fa-3x" style="color: #ccc;"></i>
-                            </div>
-                            <div class="activity-text">
-                                <h4>ট্রেডমার্ক ই-ফাইলিং সিস্টেম উদ্বোধন</h4>
-                                <p>আধুনিক ই-ফাইলিং সিস্টেমের মাধ্যমে সেবা প্রদান শুরু...</p>
-                                <span class="date">১৫ মার্চ ২০২৬</span>
-                            </div>
+                            <div class="activity-img"><i class="fas fa-image fa-3x" style="color:#ccc"></i></div>
+                            <div class="activity-text"><h4>ট্রেডমার্ক ই-ফাইলিং সিস্টেম আপগ্রেড</h4><p>আধুনিক ই-ফাইলিং সিস্টেমের মাধ্যমে সেবা প্রদান শুরু...</p><span class="date">১৫ মার্চ ২০২৬</span></div>
                         </div>
                         <div class="activity-item">
-                            <div class="activity-img">
-                                <i class="fas fa-image fa-3x" style="color: #ccc;"></i>
-                            </div>
-                            <div class="activity-text">
-                                <h4>WIPO-এর সাথে যৌথ কর্মশালা অনুষ্ঠিত</h4>
-                                <p>মেধাসম্পদ বিষয়ে সচেতনতা বৃদ্ধিতে কর্মশালা...</p>
-                                <span class="date">০১ মার্চ ২০২৬</span>
-                            </div>
+                            <div class="activity-img"><i class="fas fa-image fa-3x" style="color:#ccc"></i></div>
+                            <div class="activity-text"><h4>WIPO-এর সাথে যৌথ কর্মশালা অনুষ্ঠিত</h4><p>মেধাসম্পদ বিষয়ে সচেতনতা বৃদ্ধিতে কর্মশালা...</p><span class="date">০১ মার্চ ২০২৬</span></div>
                         </div>
                     </div>
                 </div>
@@ -254,67 +306,101 @@
         </div>
     </section>
 
+
     <!-- Statistics Section -->
     <section class="statistics">
         <div class="container">
-            <h2 class="section-title">আমাদের সেবা পরিসংখ্যান</h2>
+            <h2 class="section-title" style="color:#fff">আমাদের সেবা পরিসংখ্যান</h2>
+            <div class="section-divider" style="background:#fff"></div>
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-file-alt"></i></div>
-                    <div class="stat-number" data-target="45230">০</div>
+                    <div class="stat-icon"><i class="fas fa-file-signature"></i></div>
+                    <div class="stat-number" data-target="52430">০</div>
                     <div class="stat-label">মোট ট্রেডমার্ক নিবন্ধন</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fas fa-lightbulb"></i></div>
-                    <div class="stat-number" data-target="3250">০</div>
+                    <div class="stat-number" data-target="4180">০</div>
                     <div class="stat-label">মোট পেটেন্ট নিবন্ধন</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fas fa-pencil-ruler"></i></div>
-                    <div class="stat-number" data-target="8920">০</div>
+                    <div class="stat-number" data-target="11250">০</div>
                     <div class="stat-label">মোট ডিজাইন নিবন্ধন</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-clock"></i></div>
-                    <div class="stat-number" data-target="1580">০</div>
+                    <div class="stat-icon"><i class="fas fa-hourglass-half"></i></div>
+                    <div class="stat-number" data-target="2340">০</div>
                     <div class="stat-label">চলমান আবেদন</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Important Links -->
+
+    <!-- গুরুত্বপূর্ণ লিংক - With Logo Upload Option -->
     <section class="important-links">
         <div class="container">
             <h2 class="section-title">গুরুত্বপূর্ণ লিংক</h2>
-            <div class="links-grid">
-                <a href="https://www.bangladesh.gov.bd" target="_blank" class="link-card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Coat_of_arms_of_Bangladesh.svg/60px-Coat_of_arms_of_Bangladesh.svg.png" alt="">
-                    <span>বাংলাদেশ জাতীয় তথ্য বাতায়ন</span>
-                </a>
-                <a href="https://www.moind.gov.bd" target="_blank" class="link-card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Coat_of_arms_of_Bangladesh.svg/60px-Coat_of_arms_of_Bangladesh.svg.png" alt="">
-                    <span>শিল্প মন্ত্রণালয়</span>
-                </a>
-                <a href="https://www.wipo.int" target="_blank" class="link-card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/WIPO_logo.svg/60px-WIPO_logo.svg.png" alt="">
-                    <span>WIPO</span>
-                </a>
-                <a href="#" class="link-card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Coat_of_arms_of_Bangladesh.svg/60px-Coat_of_arms_of_Bangladesh.svg.png" alt="">
-                    <span>প্রধানমন্ত্রীর কার্যালয়</span>
-                </a>
-                <a href="#" class="link-card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Coat_of_arms_of_Bangladesh.svg/60px-Coat_of_arms_of_Bangladesh.svg.png" alt="">
-                    <span>মন্ত্রিপরিষদ বিভাগ</span>
-                </a>
-                <a href="#" class="link-card">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Coat_of_arms_of_Bangladesh.svg/60px-Coat_of_arms_of_Bangladesh.svg.png" alt="">
-                    <span>a2i প্রোগ্রাম</span>
-                </a>
+            <div class="section-divider"></div>
+            <div class="links-grid" id="linksGrid">
+                <!-- Each card has editable logo upload -->
+                <div class="link-card" data-id="link-1">
+                    <div class="link-logo-wrapper">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Coat_of_arms_of_Bangladesh.svg/60px-Coat_of_arms_of_Bangladesh.svg.png" alt="জাতীয় তথ্য বাতায়ন" class="link-logo-img" id="logo-link-1">
+                        <button class="logo-upload-btn" data-target="link-1" title="লোগো পরিবর্তন করুন"><i class="fas fa-camera"></i></button>
+                        <input type="file" class="logo-file-input" id="file-link-1" accept="image/*" hidden>
+                    </div>
+                    <a href="https://www.bangladesh.gov.bd" target="_blank" class="link-name">জাতীয় তথ্য বাতায়ন</a>
+                </div>
+                <div class="link-card" data-id="link-2">
+                    <div class="link-logo-wrapper">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Coat_of_arms_of_Bangladesh.svg/60px-Coat_of_arms_of_Bangladesh.svg.png" alt="শিল্প মন্ত্রণালয়" class="link-logo-img" id="logo-link-2">
+                        <button class="logo-upload-btn" data-target="link-2" title="লোগো পরিবর্তন করুন"><i class="fas fa-camera"></i></button>
+                        <input type="file" class="logo-file-input" id="file-link-2" accept="image/*" hidden>
+                    </div>
+                    <a href="https://www.moind.gov.bd" target="_blank" class="link-name">শিল্প মন্ত্রণালয়</a>
+                </div>
+                <div class="link-card" data-id="link-3">
+                    <div class="link-logo-wrapper">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/WIPO_logo.svg/60px-WIPO_logo.svg.png" alt="WIPO" class="link-logo-img" id="logo-link-3">
+                        <button class="logo-upload-btn" data-target="link-3" title="লোগো পরিবর্তন করুন"><i class="fas fa-camera"></i></button>
+                        <input type="file" class="logo-file-input" id="file-link-3" accept="image/*" hidden>
+                    </div>
+                    <a href="https://www.wipo.int" target="_blank" class="link-name">WIPO</a>
+                </div>
+                <div class="link-card" data-id="link-4">
+                    <div class="link-logo-wrapper">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Coat_of_arms_of_Bangladesh.svg/60px-Coat_of_arms_of_Bangladesh.svg.png" alt="প্রধানমন্ত্রীর কার্যালয়" class="link-logo-img" id="logo-link-4">
+                        <button class="logo-upload-btn" data-target="link-4" title="লোগো পরিবর্তন করুন"><i class="fas fa-camera"></i></button>
+                        <input type="file" class="logo-file-input" id="file-link-4" accept="image/*" hidden>
+                    </div>
+                    <a href="https://www.pmo.gov.bd" target="_blank" class="link-name">প্রধানমন্ত্রীর কার্যালয়</a>
+                </div>
+                <div class="link-card" data-id="link-5">
+                    <div class="link-logo-wrapper">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Coat_of_arms_of_Bangladesh.svg/60px-Coat_of_arms_of_Bangladesh.svg.png" alt="মাইগভ" class="link-logo-img" id="logo-link-5">
+                        <button class="logo-upload-btn" data-target="link-5" title="লোগো পরিবর্তন করুন"><i class="fas fa-camera"></i></button>
+                        <input type="file" class="logo-file-input" id="file-link-5" accept="image/*" hidden>
+                    </div>
+                    <a href="https://www.mygov.bd" target="_blank" class="link-name">মাইগভ</a>
+                </div>
+                <div class="link-card" data-id="link-6">
+                    <div class="link-logo-wrapper">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Coat_of_arms_of_Bangladesh.svg/60px-Coat_of_arms_of_Bangladesh.svg.png" alt="a2i প্রোগ্রাম" class="link-logo-img" id="logo-link-6">
+                        <button class="logo-upload-btn" data-target="link-6" title="লোগো পরিবর্তন করুন"><i class="fas fa-camera"></i></button>
+                        <input type="file" class="logo-file-input" id="file-link-6" accept="image/*" hidden>
+                    </div>
+                    <a href="https://a2i.gov.bd" target="_blank" class="link-name">a2i প্রোগ্রাম</a>
+                </div>
+            </div>
+            <!-- Add New Link Button -->
+            <div class="add-link-section">
+                <button class="add-link-btn" id="addNewLink"><i class="fas fa-plus-circle"></i> নতুন লিংক যোগ করুন</button>
             </div>
         </div>
     </section>
+
 
     <!-- Officer Info -->
     <section class="officer-section">
@@ -335,34 +421,39 @@
     </section>
 
     <!-- Footer -->
-    <footer class="main-footer">
+    <footer class="main-footer" id="contact">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
                     <h3>যোগাযোগ</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> ৯১, মতিঝিল বাণিজ্যিক এলাকা, ঢাকা-১০০০</p>
+                    <p><i class="fas fa-map-marker-alt"></i> ৯১, মতিঝিল বা/এ, ঢাকা-১০০০</p>
                     <p><i class="fas fa-phone"></i> +৮৮-০২-৫৫০০০০০০</p>
                     <p><i class="fas fa-fax"></i> +৮৮-০২-৫৫০০০০০১</p>
                     <p><i class="fas fa-envelope"></i> info@dpdt.gov.bd</p>
+                    <p><i class="fas fa-globe"></i> www.dpdt.gov.bd</p>
                 </div>
                 <div class="footer-col">
                     <h3>দ্রুত লিংক</h3>
                     <ul>
-                        <li><a href="#">পেটেন্ট নিবন্ধন</a></li>
-                        <li><a href="#">ডিজাইন নিবন্ধন</a></li>
-                        <li><a href="#">ট্রেডমার্ক নিবন্ধন</a></li>
-                        <li><a href="#">ফরম ডাউনলোড</a></li>
-                        <li><a href="#">ফি তালিকা</a></li>
+                        <li><a href="#svc-patent">পেটেন্ট নিবন্ধন</a></li>
+                        <li><a href="#svc-design">ডিজাইন নিবন্ধন</a></li>
+                        <li><a href="#svc-trademark">ট্রেডমার্ক নিবন্ধন</a></li>
+                        <li><a href="#form-trademark">ফরম ডাউনলোড</a></li>
+                        <li><a href="#svc-fee">ফি তালিকা</a></li>
+                        <li><a href="#pub-journal">ট্রেডমার্ক জার্নাল</a></li>
+                        <li><a href="#esvc-complaint">অভিযোগ দাখিল</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h3>গুরুত্বপূর্ণ লিংক</h3>
                     <ul>
-                        <li><a href="#">শিল্প মন্ত্রণালয়</a></li>
-                        <li><a href="#">জাতীয় তথ্য বাতায়ন</a></li>
-                        <li><a href="#">WIPO</a></li>
-                        <li><a href="#">বাংলাদেশ সরকার</a></li>
-                        <li><a href="#">মাইগভ</a></li>
+                        <li><a href="https://www.moind.gov.bd" target="_blank">শিল্প মন্ত্রণালয়</a></li>
+                        <li><a href="https://www.bangladesh.gov.bd" target="_blank">জাতীয় তথ্য বাতায়ন</a></li>
+                        <li><a href="https://www.wipo.int" target="_blank">WIPO</a></li>
+                        <li><a href="https://www.pmo.gov.bd" target="_blank">প্রধানমন্ত্রীর কার্যালয়</a></li>
+                        <li><a href="https://www.mygov.bd" target="_blank">মাইগভ</a></li>
+                        <li><a href="https://a2i.gov.bd" target="_blank">a2i প্রোগ্রাম</a></li>
+                        <li><a href="https://cabinet.gov.bd" target="_blank">মন্ত্রিপরিষদ বিভাগ</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -372,20 +463,53 @@
                         <a href="#"><i class="fab fa-twitter"></i></a>
                         <a href="#"><i class="fab fa-youtube"></i></a>
                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
                     <div class="visitor-counter">
-                        <p><i class="fas fa-eye"></i> মোট পরিদর্শক: <strong>১,২৩,৪৫৬</strong></p>
+                        <p><i class="fas fa-eye"></i> মোট পরিদর্শক: <strong>২,৪৫,৮৯১</strong></p>
+                        <p><i class="fas fa-clock"></i> সর্বশেষ আপডেট: ২১/০৫/২০২৬</p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
             <div class="container">
-                <p>© ২০২৬ পেটেন্ট, ডিজাইন ও ট্রেডমার্কস অধিদপ্তর। সর্বস্বত্ব সংরক্ষিত।</p>
-                <p>কারিগরি সহায়তায়: <a href="#">তথ্য ও যোগাযোগ প্রযুক্তি বিভাগ</a></p>
+                <p>© ২০০৯ - ২০২৬ পেটেন্ট, ডিজাইন ও ট্রেডমার্কস অধিদপ্তর। সর্বস্বত্ব সংরক্ষিত।</p>
+                <p>কারিগরি সহায়তায়: <a href="#">তথ্য ও যোগাযোগ প্রযুক্তি বিভাগ</a> | <a href="#">গোপনীয়তা নীতি</a> | <a href="#">ব্যবহারের শর্তাবলী</a></p>
             </div>
         </div>
     </footer>
+
+    <!-- Add New Link Modal -->
+    <div class="modal-overlay" id="addLinkModal" style="display:none;">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="fas fa-plus-circle"></i> নতুন লিংক যোগ করুন</h3>
+                <button class="modal-close" id="closeAddModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>লিংকের নাম</label>
+                    <input type="text" id="newLinkName" placeholder="যেমন: বাংলাদেশ ব্যাংক">
+                </div>
+                <div class="form-group">
+                    <label>URL</label>
+                    <input type="url" id="newLinkUrl" placeholder="https://example.gov.bd">
+                </div>
+                <div class="form-group">
+                    <label>লোগো আপলোড করুন</label>
+                    <input type="file" id="newLinkLogo" accept="image/*">
+                    <div class="logo-preview-new" id="newLogoPreview" style="display:none;">
+                        <img id="newLogoPreviewImg" src="" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" id="saveNewLink"><i class="fas fa-save"></i> সংরক্ষণ করুন</button>
+                <button class="btn-secondary" id="cancelAddModal">বাতিল</button>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
