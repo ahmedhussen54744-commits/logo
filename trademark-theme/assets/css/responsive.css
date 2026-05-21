@@ -1,0 +1,68 @@
+/* ===== Responsive Design - Mobile + Desktop ===== */
+
+@media (max-width: 1024px) {
+    .services-grid { grid-template-columns: repeat(3, 1fr); }
+    .content-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    .links-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .top-bar .container { flex-direction: column; gap: 8px; text-align: center; }
+    
+    .header-inner { flex-direction: column; gap: 16px; text-align: center; }
+    .logo-area { flex-direction: column; }
+    .site-identity .site-title { font-size: 20px; }
+    .header-search input { width: 180px; }
+    
+    .mobile-toggle { display: block; }
+    .nav-list {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+    }
+    .nav-list.active { display: flex; }
+    .nav-list > li > a { border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .sub-menu {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        box-shadow: none;
+        background: rgba(0,77,58,0.95);
+    }
+    .sub-menu li a {
+        color: var(--white);
+        border-bottom-color: rgba(255,255,255,0.1);
+        padding-left: 35px;
+    }
+    .sub-menu li a:hover { background: rgba(255,255,255,0.1); }
+    
+    .hero-section { height: 300px; }
+    .hero-slide-content h2 { font-size: 24px; }
+    .hero-slide-content p { font-size: 15px; }
+    
+    .services-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .stat-box .number { font-size: 30px; }
+    .links-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr; }
+    
+    /* Application Form */
+    .form-grid { grid-template-columns: 1fr !important; }
+    .verify-card { padding: 20px !important; }
+    .verify-logo { width: 80px !important; height: 80px !important; }
+}
+
+@media (max-width: 480px) {
+    .container { padding: 0 12px; }
+    .services-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .service-item { padding: 20px 10px; }
+    .hero-section { height: 250px; }
+    .hero-slide-content h2 { font-size: 20px; }
+    .slider-nav { width: 38px; height: 38px; }
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .stat-box { padding: 20px 12px; }
+    .stat-box .number { font-size: 26px; }
+}
