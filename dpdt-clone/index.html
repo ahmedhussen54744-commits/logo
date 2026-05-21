@@ -28,6 +28,10 @@
                     <button class="acc-btn" id="fontDecrease" title="ছোট অক্ষর">A-</button>
                     <button class="acc-btn" id="fontReset" title="স্বাভাবিক">A</button>
                 </div>
+                <div class="user-auth-btns">
+                    <button class="acc-btn auth-btn" id="loginNavBtn"><i class="fas fa-sign-in-alt"></i> লগইন</button>
+                    <button class="acc-btn auth-btn" id="registerNavBtn"><i class="fas fa-user-plus"></i> রেজিস্টার</button>
+                </div>
             </div>
         </div>
     </div>
@@ -67,7 +71,7 @@
                 <i class="fas fa-bars"></i>
             </button>
             <ul class="nav-menu" id="navMenu">
-                <li class="nav-item"><a href="#"><i class="fas fa-home"></i> হোম</a></li>
+                <li class="nav-item"><a href="#" data-page="home"><i class="fas fa-home"></i> হোম</a></li>
                 <li class="nav-item has-dropdown">
                     <a href="#">আমাদের সম্পর্কে <i class="fas fa-chevron-down"></i></a>
                     <ul class="dropdown-menu">
@@ -75,92 +79,44 @@
                         <li><a href="#">ভিশন ও মিশন</a></li>
                         <li><a href="#">কর্মকর্তা তালিকা</a></li>
                         <li><a href="#">সাংগঠনিক কাঠামো</a></li>
-                        <li><a href="#">কার্যাবলী</a></li>
-                        <li><a href="#">অর্জন</a></li>
-                        <li><a href="#">বার্ষিক প্রতিবেদন</a></li>
-                        <li><a href="#">যোগাযোগ তথ্য</a></li>
                     </ul>
                 </li>
                 <li class="nav-item has-dropdown">
                     <a href="#">সেবাসমূহ <i class="fas fa-chevron-down"></i></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">ট্রেডমার্ক রেজিস্ট্রেশন</a></li>
+                        <li><a href="#" data-page="trademark-register">ট্রেডমার্ক রেজিস্ট্রেশন</a></li>
+                        <li><a href="#" data-page="verify">সার্টিফিকেট যাচাই</a></li>
                         <li><a href="#">পেটেন্ট রেজিস্ট্রেশন</a></li>
                         <li><a href="#">ডিজাইন রেজিস্ট্রেশন</a></li>
                         <li><a href="#">নবায়ন সেবা</a></li>
-                        <li><a href="#">সার্টিফিকেট যাচাই</a></li>
-                        <li><a href="#">অনলাইন আবেদন</a></li>
-                        <li><a href="#">ফি প্রদান</a></li>
-                        <li><a href="#">অভিযোগ দাখিল</a></li>
                     </ul>
                 </li>
+                <li class="nav-item"><a href="#" data-page="trademark-register">ট্রেডমার্ক রেজিস্ট্রেশন</a></li>
+                <li class="nav-item"><a href="#" data-page="verify">সার্টিফিকেট যাচাই</a></li>
                 <li class="nav-item has-dropdown">
                     <a href="#">আইন ও বিধি <i class="fas fa-chevron-down"></i></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">ট্রেডমার্ক আইন ২০০৯</a></li>
                         <li><a href="#">পেটেন্ট ও ডিজাইন আইন</a></li>
                         <li><a href="#">ট্রেডমার্ক বিধিমালা</a></li>
-                        <li><a href="#">আন্তর্জাতিক চুক্তি</a></li>
-                        <li><a href="#">নীতিমালা</a></li>
-                        <li><a href="#">প্রজ্ঞাপন</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item has-dropdown">
-                    <a href="#">প্রকাশনা <i class="fas fa-chevron-down"></i></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">ট্রেডমার্ক জার্নাল</a></li>
-                        <li><a href="#">বার্ষিক প্রতিবেদন</a></li>
-                        <li><a href="#">গেজেট</a></li>
-                        <li><a href="#">নিউজলেটার</a></li>
-                        <li><a href="#">প্রকাশনা আর্কাইভ</a></li>
-                    </ul>
-                </li>
-
-                <li class="nav-item has-dropdown">
-                    <a href="#">ফরম ও ডাউনলোড <i class="fas fa-chevron-down"></i></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">ট্রেডমার্ক ফরম</a></li>
-                        <li><a href="#">পেটেন্ট ফরম</a></li>
-                        <li><a href="#">ডিজাইন ফরম</a></li>
-                        <li><a href="#">আবেদন ফরম</a></li>
-                        <li><a href="#">ফি তালিকা</a></li>
-                        <li><a href="#">নির্দেশিকা</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item has-dropdown">
-                    <a href="#">তথ্য ভান্ডার <i class="fas fa-chevron-down"></i></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">ট্রেডমার্ক ডাটাবেস</a></li>
-                        <li><a href="#">পেটেন্ট ডাটাবেস</a></li>
-                        <li><a href="#">ডিজাইন ডাটাবেস</a></li>
-                        <li><a href="#">পরিসংখ্যান</a></li>
-                        <li><a href="#">রিপোর্ট</a></li>
                     </ul>
                 </li>
                 <li class="nav-item has-dropdown">
                     <a href="#">ই-সেবা <i class="fas fa-chevron-down"></i></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">অনলাইন আবেদন</a></li>
+                        <li><a href="#" data-page="trademark-register">অনলাইন আবেদন</a></li>
+                        <li><a href="#" data-page="verify">সার্টিফিকেট যাচাই</a></li>
                         <li><a href="#">আবেদন ট্র্যাকিং</a></li>
-                        <li><a href="#">অনলাইন ফি প্রদান</a></li>
-                        <li><a href="#">সার্টিফিকেট যাচাই</a></li>
-                        <li><a href="#">ই-জার্নাল</a></li>
-                        <li><a href="#">ই-নোটিশ</a></li>
                     </ul>
                 </li>
-                <li class="nav-item has-dropdown">
-                    <a href="#">গ্যালারি <i class="fas fa-chevron-down"></i></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">ফটো গ্যালারি</a></li>
-                        <li><a href="#">ভিডিও গ্যালারি</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item"><a href="#">নোটিশ বোর্ড</a></li>
                 <li class="nav-item"><a href="#">যোগাযোগ</a></li>
             </ul>
         </div>
     </nav>
 
+
+    <!-- ========== PAGE: HOME ========== -->
+    <div id="page-home" class="page-content active">
 
     <!-- Hero Slider -->
     <section class="hero-slider" id="heroSlider">
@@ -169,21 +125,21 @@
                 <div class="slide-content">
                     <h2>পেটেন্ট, ডিজাইন ও ট্রেডমার্কস অধিদপ্তরে স্বাগতম</h2>
                     <p>মেধাস্বত্ব সুরক্ষায় আমরা প্রতিশ্রুতিবদ্ধ। আপনার উদ্ভাবন ও সৃজনশীলতার আইনি সুরক্ষা নিশ্চিত করুন।</p>
-                    <a href="#" class="slide-btn">আবেদন করুন</a>
+                    <a href="#" class="slide-btn" data-page="trademark-register">আবেদন করুন</a>
                 </div>
             </div>
             <div class="slide" style="background: linear-gradient(135deg, #0b5345 0%, #1abc9c 100%);">
                 <div class="slide-content">
                     <h2>অনলাইন ট্রেডমার্ক রেজিস্ট্রেশন</h2>
                     <p>ঘরে বসেই আপনার ব্র্যান্ডের ট্রেডমার্ক নিবন্ধন করুন। দ্রুত ও সহজ প্রক্রিয়া।</p>
-                    <a href="#" class="slide-btn">বিস্তারিত জানুন</a>
+                    <a href="#" class="slide-btn" data-page="trademark-register">বিস্তারিত জানুন</a>
                 </div>
             </div>
             <div class="slide" style="background: linear-gradient(135deg, #4a235a 0%, #8e44ad 100%);">
                 <div class="slide-content">
-                    <h2>পেটেন্ট সুরক্ষা</h2>
-                    <p>আপনার উদ্ভাবনের পেটেন্ট নিবন্ধন করে আইনি সুরক্ষা নিশ্চিত করুন।</p>
-                    <a href="#" class="slide-btn">পেটেন্ট আবেদন</a>
+                    <h2>সার্টিফিকেট যাচাই করুন</h2>
+                    <p>আপনার ট্রেডমার্ক সার্টিফিকেটের সত্যতা যাচাই করুন অনলাইনে।</p>
+                    <a href="#" class="slide-btn" data-page="verify">যাচাই করুন</a>
                 </div>
             </div>
             <div class="slide" style="background: linear-gradient(135deg, #7d6608 0%, #f39c12 100%);">
@@ -208,7 +164,7 @@
                 <p>মেধাস্বত্ব সংরক্ষণে আমাদের বিভিন্ন সেবা</p>
             </div>
             <div class="services-grid">
-                <div class="service-card">
+                <div class="service-card" data-page="trademark-register">
                     <div class="service-icon"><i class="fas fa-trademark"></i></div>
                     <h3>ট্রেডমার্ক নিবন্ধন</h3>
                     <p>ব্র্যান্ড পরিচয় সুরক্ষা</p>
@@ -228,12 +184,12 @@
                     <h3>নবায়ন সেবা</h3>
                     <p>মেয়াদ বৃদ্ধি সেবা</p>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-page="verify">
                     <div class="service-icon"><i class="fas fa-certificate"></i></div>
                     <h3>সার্টিফিকেট যাচাই</h3>
                     <p>অনলাইন সত্যতা যাচাই</p>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-page="trademark-register">
                     <div class="service-icon"><i class="fas fa-laptop"></i></div>
                     <h3>অনলাইন আবেদন</h3>
                     <p>ই-ফাইলিং সেবা</p>
@@ -247,26 +203,6 @@
                     <div class="service-icon"><i class="fas fa-gavel"></i></div>
                     <h3>বিরোধ নিষ্পত্তি</h3>
                     <p>আইনি সহায়তা</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon"><i class="fas fa-file-alt"></i></div>
-                    <h3>জার্নাল প্রকাশনা</h3>
-                    <p>ট্রেডমার্ক জার্নাল</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon"><i class="fas fa-globe"></i></div>
-                    <h3>আন্তর্জাতিক নিবন্ধন</h3>
-                    <p>মাদ্রিদ প্রোটোকল</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon"><i class="fas fa-money-bill-wave"></i></div>
-                    <h3>ফি প্রদান</h3>
-                    <p>অনলাইন পেমেন্ট</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon"><i class="fas fa-headset"></i></div>
-                    <h3>হেল্পডেস্ক</h3>
-                    <p>সার্বক্ষণিক সহায়তা</p>
                 </div>
             </div>
         </div>
@@ -284,26 +220,11 @@
                     </div>
                     <div class="content-box-body">
                         <ul class="notice-list">
-                            <li>
-                                <span class="notice-date">১৫ জানু ২০২৫</span>
-                                <a href="#">ট্রেডমার্ক জার্নাল ২০২৫ - ১ম সংখ্যা প্রকাশ</a>
-                            </li>
-                            <li>
-                                <span class="notice-date">১০ জানু ২০২৫</span>
-                                <a href="#">অনলাইন আবেদনের নতুন নির্দেশিকা</a>
-                            </li>
-                            <li>
-                                <span class="notice-date">০৫ জানু ২০২৫</span>
-                                <a href="#">নবায়ন ফি পরিবর্তনের বিজ্ঞপ্তি</a>
-                            </li>
-                            <li>
-                                <span class="notice-date">০১ জানু ২০২৫</span>
-                                <a href="#">নতুন বছরের ছুটির তালিকা</a>
-                            </li>
-                            <li>
-                                <span class="notice-date">২৮ ডিসে ২০২৪</span>
-                                <a href="#">ডিজাইন রেজিস্ট্রেশন ফরম আপডেট</a>
-                            </li>
+                            <li><span class="notice-date">১৫ জানু ২০২৫</span><a href="#">ট্রেডমার্ক জার্নাল ২০২৫ - ১ম সংখ্যা প্রকাশ</a></li>
+                            <li><span class="notice-date">১০ জানু ২০২৫</span><a href="#">অনলাইন আবেদনের নতুন নির্দেশিকা</a></li>
+                            <li><span class="notice-date">০৫ জানু ২০২৫</span><a href="#">নবায়ন ফি পরিবর্তনের বিজ্ঞপ্তি</a></li>
+                            <li><span class="notice-date">০১ জানু ২০২৫</span><a href="#">নতুন বছরের ছুটির তালিকা</a></li>
+                            <li><span class="notice-date">২৮ ডিসে ২০২৪</span><a href="#">ডিজাইন রেজিস্ট্রেশন ফরম আপডেট</a></li>
                         </ul>
                     </div>
                 </div>
@@ -314,26 +235,11 @@
                     </div>
                     <div class="content-box-body">
                         <ul class="activity-list">
-                            <li>
-                                <span class="activity-date">১৮ জানু ২০২৫</span>
-                                <a href="#">মেধাস্বত্ব সচেতনতা সেমিনার অনুষ্ঠিত</a>
-                            </li>
-                            <li>
-                                <span class="activity-date">১২ জানু ২০২৫</span>
-                                <a href="#">WIPO এর সাথে সমঝোতা স্মারক স্বাক্ষর</a>
-                            </li>
-                            <li>
-                                <span class="activity-date">০৮ জানু ২০২৫</span>
-                                <a href="#">ই-ফাইলিং সিস্টেম আপগ্রেড সম্পন্ন</a>
-                            </li>
-                            <li>
-                                <span class="activity-date">০৩ জানু ২০২৫</span>
-                                <a href="#">কর্মকর্তাদের প্রশিক্ষণ কর্মশালা</a>
-                            </li>
-                            <li>
-                                <span class="activity-date">৩০ ডিসে ২০২৪</span>
-                                <a href="#">বার্ষিক কর্মসম্পাদন চুক্তি স্বাক্ষর</a>
-                            </li>
+                            <li><span class="activity-date">১৮ জানু ২০২৫</span><a href="#">মেধাস্বত্ব সচেতনতা সেমিনার অনুষ্ঠিত</a></li>
+                            <li><span class="activity-date">১২ জানু ২০২৫</span><a href="#">WIPO এর সাথে সমঝোতা স্মারক স্বাক্ষর</a></li>
+                            <li><span class="activity-date">০৮ জানু ২০২৫</span><a href="#">ই-ফাইলিং সিস্টেম আপগ্রেড সম্পন্ন</a></li>
+                            <li><span class="activity-date">০৩ জানু ২০২৫</span><a href="#">কর্মকর্তাদের প্রশিক্ষণ কর্মশালা</a></li>
+                            <li><span class="activity-date">৩০ ডিসে ২০২৪</span><a href="#">বার্ষিক কর্মসম্পাদন চুক্তি স্বাক্ষর</a></li>
                         </ul>
                     </div>
                 </div>
@@ -374,7 +280,6 @@
         </div>
     </section>
 
-
     <!-- Important Links Section -->
     <section class="important-links-section">
         <div class="container">
@@ -410,78 +315,303 @@
                     <h4 class="link-title">জাতীয় তথ্য বাতায়ন</h4>
                     <a href="https://bangladesh.gov.bd" target="_blank" class="link-url">bangladesh.gov.bd</a>
                 </div>
-                <div class="link-card" data-link-id="link4">
-                    <div class="link-logo-wrapper">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Government_Seal_of_Bangladesh.svg/60px-Government_Seal_of_Bangladesh.svg.png" alt="Logo" class="link-logo-img" data-logo-key="link4">
-                        <button class="logo-upload-btn" data-target="link4"><i class="fas fa-camera"></i></button>
-                        <input type="file" class="logo-file-input" id="logoInput-link4" accept="image/*" hidden>
-                    </div>
-                    <h4 class="link-title">WIPO</h4>
-                    <a href="https://wipo.int" target="_blank" class="link-url">wipo.int</a>
-                </div>
-                <div class="link-card" data-link-id="link5">
-                    <div class="link-logo-wrapper">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Government_Seal_of_Bangladesh.svg/60px-Government_Seal_of_Bangladesh.svg.png" alt="Logo" class="link-logo-img" data-logo-key="link5">
-                        <button class="logo-upload-btn" data-target="link5"><i class="fas fa-camera"></i></button>
-                        <input type="file" class="logo-file-input" id="logoInput-link5" accept="image/*" hidden>
-                    </div>
-                    <h4 class="link-title">মন্ত্রিপরিষদ বিভাগ</h4>
-                    <a href="https://cabinet.gov.bd" target="_blank" class="link-url">cabinet.gov.bd</a>
-                </div>
-                <div class="link-card" data-link-id="link6">
-                    <div class="link-logo-wrapper">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Government_Seal_of_Bangladesh.svg/60px-Government_Seal_of_Bangladesh.svg.png" alt="Logo" class="link-logo-img" data-logo-key="link6">
-                        <button class="logo-upload-btn" data-target="link6"><i class="fas fa-camera"></i></button>
-                        <input type="file" class="logo-file-input" id="logoInput-link6" accept="image/*" hidden>
-                    </div>
-                    <h4 class="link-title">ফর্ম ডাউনলোড</h4>
-                    <a href="https://forms.gov.bd" target="_blank" class="link-url">forms.gov.bd</a>
-                </div>
             </div>
             <div class="add-link-wrapper">
-                <button class="add-link-btn" id="addLinkBtn">
-                    <i class="fas fa-plus-circle"></i> নতুন লিংক যোগ করুন
-                </button>
+                <button class="add-link-btn" id="addLinkBtn"><i class="fas fa-plus-circle"></i> নতুন লিংক যোগ করুন</button>
             </div>
         </div>
     </section>
 
+    </div><!-- END page-home -->
 
-    <!-- Officer Section -->
-    <section class="officer-section">
-        <div class="container">
-            <div class="section-title">
-                <h2>কর্মকর্তাবৃন্দ</h2>
-                <p>অধিদপ্তরের প্রধান কর্মকর্তাগণ</p>
+
+    <!-- ========== PAGE: TRADEMARK REGISTRATION ========== -->
+    <div id="page-trademark-register" class="page-content">
+        <section class="page-section">
+            <div class="container">
+                <div class="page-header">
+                    <h1><i class="fas fa-trademark"></i> ট্রেডমার্ক সার্টিফিকেট আবেদন</h1>
+                    <p>নিচের ফর্মটি পূরণ করে আপনার ট্রেডমার্ক সার্টিফিকেটের জন্য আবেদন করুন।</p>
+                </div>
+
+                <div class="dpdt-apply-form-wrapper">
+                    <div class="dpdt-form-notice">
+                        <i class="fas fa-info-circle"></i>
+                        <span>* চিহ্নিত ঘরগুলো অবশ্যই পূরণ করতে হবে।</span>
+                    </div>
+
+                    <form id="trademark-application-form" class="dpdt-form" novalidate>
+                        <!-- Applicant Information -->
+                        <fieldset class="dpdt-fieldset">
+                            <legend><i class="fas fa-user"></i> আবেদনকারীর তথ্য</legend>
+                            <div class="dpdt-form-row-2">
+                                <div class="dpdt-form-group">
+                                    <label for="applicant_name">আবেদনকারীর নাম (English) <span class="required">*</span></label>
+                                    <input type="text" id="applicant_name" name="applicant_name" required placeholder="Full Name in English">
+                                </div>
+                                <div class="dpdt-form-group">
+                                    <label for="applicant_name_bn">আবেদনকারীর নাম (বাংলা)</label>
+                                    <input type="text" id="applicant_name_bn" name="applicant_name_bn" placeholder="পূর্ণ নাম বাংলায়">
+                                </div>
+                            </div>
+                            <div class="dpdt-form-row-2">
+                                <div class="dpdt-form-group">
+                                    <label for="applicant_email">ইমেইল ঠিকানা <span class="required">*</span></label>
+                                    <input type="email" id="applicant_email" name="applicant_email" required placeholder="email@example.com">
+                                </div>
+                                <div class="dpdt-form-group">
+                                    <label for="applicant_phone">মোবাইল নম্বর <span class="required">*</span></label>
+                                    <input type="tel" id="applicant_phone" name="applicant_phone" required placeholder="+880 1XXX-XXXXXX">
+                                </div>
+                            </div>
+                            <div class="dpdt-form-group">
+                                <label for="applicant_address">ঠিকানা</label>
+                                <textarea id="applicant_address" name="applicant_address" rows="3" placeholder="সম্পূর্ণ ঠিকানা লিখুন"></textarea>
+                            </div>
+                        </fieldset>
+
+
+                        <!-- Brand/Trademark Information -->
+                        <fieldset class="dpdt-fieldset">
+                            <legend><i class="fas fa-tag"></i> ব্র্যান্ড/ট্রেডমার্ক তথ্য</legend>
+                            <div class="dpdt-form-row-2">
+                                <div class="dpdt-form-group">
+                                    <label for="brand_name">ব্র্যান্ডের নাম (English) <span class="required">*</span></label>
+                                    <input type="text" id="brand_name" name="brand_name" required placeholder="Brand Name">
+                                </div>
+                                <div class="dpdt-form-group">
+                                    <label for="brand_name_bn">ব্র্যান্ডের নাম (বাংলা)</label>
+                                    <input type="text" id="brand_name_bn" name="brand_name_bn" placeholder="ব্র্যান্ডের নাম বাংলায়">
+                                </div>
+                            </div>
+                            <div class="dpdt-form-row-2">
+                                <div class="dpdt-form-group">
+                                    <label for="trademark_class">ট্রেডমার্ক শ্রেণী <span class="required">*</span></label>
+                                    <select id="trademark_class" name="trademark_class" required>
+                                        <option value="">— শ্রেণী নির্বাচন করুন —</option>
+                                        <option value="1">Class 1 - রাসায়নিক পদার্থ</option>
+                                        <option value="2">Class 2 - রং, বার্নিশ</option>
+                                        <option value="3">Class 3 - প্রসাধনী</option>
+                                        <option value="5">Class 5 - ফার্মাসিউটিক্যাল</option>
+                                        <option value="9">Class 9 - ইলেকট্রনিক্স</option>
+                                        <option value="25">Class 25 - পোশাক</option>
+                                        <option value="29">Class 29 - খাদ্যদ্রব্য</option>
+                                        <option value="30">Class 30 - খাদ্য ও পানীয়</option>
+                                        <option value="35">Class 35 - বিজ্ঞাপন ও ব্যবসা</option>
+                                        <option value="41">Class 41 - শিক্ষা ও বিনোদন</option>
+                                        <option value="42">Class 42 - প্রযুক্তি সেবা</option>
+                                        <option value="43">Class 43 - হোটেল ও রেস্তোরাঁ</option>
+                                        <option value="45">Class 45 - আইনি সেবা</option>
+                                    </select>
+                                </div>
+                                <div class="dpdt-form-group">
+                                    <label for="trademark_type">ট্রেডমার্কের ধরন</label>
+                                    <select id="trademark_type" name="trademark_type">
+                                        <option value="word">শব্দ (Word Mark)</option>
+                                        <option value="device">ডিভাইস (Device Mark)</option>
+                                        <option value="combined">সম্মিলিত (Combined)</option>
+                                        <option value="shape">আকৃতি (Shape)</option>
+                                        <option value="color">রঙ (Color)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="dpdt-form-group">
+                                <label for="brand_logo">ব্র্যান্ড লোগো</label>
+                                <div class="dpdt-file-upload">
+                                    <input type="file" id="brand_logo" name="brand_logo" accept="image/jpeg,image/png,image/gif,image/svg+xml">
+                                    <p class="file-hint">অনুমোদিত: JPG, PNG, GIF, SVG। সর্বোচ্চ সাইজ: 2MB</p>
+                                </div>
+                                <div id="brand-logo-preview" class="logo-preview-area"></div>
+                            </div>
+                            <div class="dpdt-form-group">
+                                <label for="description">পণ্য/সেবার বর্ণনা</label>
+                                <textarea id="description" name="description" rows="4" placeholder="আপনার পণ্য বা সেবার বিস্তারিত বর্ণনা দিন"></textarea>
+                            </div>
+                        </fieldset>
+
+
+                        <!-- Owner Information -->
+                        <fieldset class="dpdt-fieldset">
+                            <legend><i class="fas fa-building"></i> মালিকের তথ্য</legend>
+                            <div class="dpdt-form-row-2">
+                                <div class="dpdt-form-group">
+                                    <label for="owner_name">মালিকের নাম (English)</label>
+                                    <input type="text" id="owner_name" name="owner_name" placeholder="Owner Name">
+                                </div>
+                                <div class="dpdt-form-group">
+                                    <label for="owner_name_bn">মালিকের নাম (বাংলা)</label>
+                                    <input type="text" id="owner_name_bn" name="owner_name_bn" placeholder="মালিকের নাম বাংলায়">
+                                </div>
+                            </div>
+                            <div class="dpdt-form-group">
+                                <label for="company_name">প্রতিষ্ঠানের নাম</label>
+                                <input type="text" id="company_name" name="company_name" placeholder="Company/Organization Name">
+                            </div>
+                        </fieldset>
+
+                        <!-- Submit -->
+                        <div class="dpdt-form-submit">
+                            <button type="submit" id="trademark-submit-btn" class="dpdt-btn dpdt-btn-primary dpdt-btn-large">
+                                <span class="btn-text"><i class="fas fa-paper-plane"></i> আবেদন জমা দিন</span>
+                                <span class="btn-loading" style="display:none;"><i class="fas fa-spinner fa-spin"></i> জমা হচ্ছে...</span>
+                            </button>
+                            <p class="dpdt-form-disclaimer">আবেদন জমা দেওয়ার মাধ্যমে আপনি আমাদের শর্তাবলী মেনে নিচ্ছেন।</p>
+                        </div>
+                    </form>
+
+                    <!-- Success Message -->
+                    <div id="trademark-form-success" class="dpdt-form-result dpdt-success" style="display:none;">
+                        <div class="dpdt-success-icon"><i class="fas fa-check-circle"></i></div>
+                        <h3>আবেদন সফল!</h3>
+                        <p id="trademark-success-message"></p>
+                        <p id="trademark-success-details"></p>
+                        <button class="dpdt-btn dpdt-btn-primary" id="newApplicationBtn"><i class="fas fa-plus"></i> নতুন আবেদন করুন</button>
+                    </div>
+                </div>
             </div>
-            <div class="officers-grid">
-                <div class="officer-card">
-                    <div class="officer-img">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <h4>মো. জাহিদুল ইসলাম</h4>
-                    <p class="officer-designation">মহাপরিচালক</p>
-                    <p class="officer-phone"><i class="fas fa-phone"></i> +৮৮০-২-৯৫৫৪৯৫৭</p>
+        </section>
+    </div><!-- END page-trademark-register -->
+
+
+    <!-- ========== PAGE: VERIFY ========== -->
+    <div id="page-verify" class="page-content">
+        <section class="page-section">
+            <div class="container">
+                <div class="page-header">
+                    <h1><i class="fas fa-shield-alt"></i> সার্টিফিকেট যাচাই</h1>
+                    <p>সার্টিফিকেট নম্বর বা QR কোড দিয়ে যাচাই করুন আপনার সার্টিফিকেট বৈধ কিনা।</p>
                 </div>
-                <div class="officer-card">
-                    <div class="officer-img">
-                        <i class="fas fa-user-tie"></i>
+
+                <div class="dpdt-verify-wrapper">
+                    <div class="dpdt-verify-search">
+                        <form id="verify-form" class="dpdt-verify-form">
+                            <div class="dpdt-verify-input-group">
+                                <input type="text" id="verify-input" name="certificate_number" placeholder="সার্টিফিকেট নম্বর লিখুন (যেমন: DPDT-TM-2024-001000)">
+                                <button type="submit" class="dpdt-btn dpdt-btn-primary" id="verify-btn">
+                                    <span class="btn-text"><i class="fas fa-search"></i> যাচাই করুন</span>
+                                    <span class="btn-loading" style="display:none;"><i class="fas fa-spinner fa-spin"></i></span>
+                                </button>
+                            </div>
+                            <p class="dpdt-verify-hint">সার্টিফিকেট নম্বর বা যাচাই টোকেন দিয়ে খুঁজুন</p>
+                        </form>
                     </div>
-                    <h4>ফারহানা রহমান</h4>
-                    <p class="officer-designation">পরিচালক (ট্রেডমার্ক)</p>
-                    <p class="officer-phone"><i class="fas fa-phone"></i> +৮৮০-২-৯৫৫৪৯৫৮</p>
-                </div>
-                <div class="officer-card">
-                    <div class="officer-img">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <h4>আবু সাঈদ</h4>
-                    <p class="officer-designation">পরিচালক (পেটেন্ট ও ডিজাইন)</p>
-                    <p class="officer-phone"><i class="fas fa-phone"></i> +৮৮০-২-৯৫৫৪৯৫৯</p>
+
+                    <!-- Result Area -->
+                    <div id="verify-result" class="dpdt-verify-result" style="display:none;"></div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div><!-- END page-verify -->
+
+
+    <!-- ========== PAGE: LOGIN ========== -->
+    <div id="page-login" class="page-content">
+        <section class="page-section">
+            <div class="container">
+                <div class="auth-wrapper">
+                    <div class="auth-card">
+                        <div class="auth-header">
+                            <div class="auth-logo">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Government_Seal_of_Bangladesh.svg/80px-Government_Seal_of_Bangladesh.svg.png" alt="DPDT">
+                            </div>
+                            <h2>লগইন করুন</h2>
+                            <p>আপনার অ্যাকাউন্টে প্রবেশ করুন</p>
+                        </div>
+                        <form id="login-form" class="auth-form">
+                            <div class="dpdt-form-group">
+                                <label for="login_email"><i class="fas fa-envelope"></i> ইমেইল ঠিকানা</label>
+                                <input type="email" id="login_email" name="email" required placeholder="আপনার ইমেইল লিখুন">
+                            </div>
+                            <div class="dpdt-form-group">
+                                <label for="login_password"><i class="fas fa-lock"></i> পাসওয়ার্ড</label>
+                                <input type="password" id="login_password" name="password" required placeholder="আপনার পাসওয়ার্ড লিখুন">
+                                <div class="password-toggle">
+                                    <button type="button" class="toggle-pass" data-target="login_password"><i class="fas fa-eye"></i></button>
+                                </div>
+                            </div>
+                            <div class="auth-options">
+                                <label class="remember-me"><input type="checkbox" name="remember"> মনে রাখুন</label>
+                                <a href="#" class="forgot-pass">পাসওয়ার্ড ভুলে গেছেন?</a>
+                            </div>
+                            <button type="submit" class="dpdt-btn dpdt-btn-primary dpdt-btn-large dpdt-btn-full">
+                                <span class="btn-text"><i class="fas fa-sign-in-alt"></i> লগইন</span>
+                                <span class="btn-loading" style="display:none;"><i class="fas fa-spinner fa-spin"></i> প্রবেশ হচ্ছে...</span>
+                            </button>
+                        </form>
+                        <div class="auth-footer">
+                            <p>অ্যাকাউন্ট নেই? <a href="#" data-page="register" class="auth-link">রেজিস্টার করুন</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div><!-- END page-login -->
+
+
+    <!-- ========== PAGE: REGISTER ========== -->
+    <div id="page-register" class="page-content">
+        <section class="page-section">
+            <div class="container">
+                <div class="auth-wrapper">
+                    <div class="auth-card auth-card-wide">
+                        <div class="auth-header">
+                            <div class="auth-logo">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Government_Seal_of_Bangladesh.svg/80px-Government_Seal_of_Bangladesh.svg.png" alt="DPDT">
+                            </div>
+                            <h2>নতুন অ্যাকাউন্ট তৈরি করুন</h2>
+                            <p>ট্রেডমার্ক সেবা পেতে রেজিস্টার করুন</p>
+                        </div>
+                        <form id="register-form" class="auth-form">
+                            <div class="dpdt-form-row-2">
+                                <div class="dpdt-form-group">
+                                    <label for="reg_name"><i class="fas fa-user"></i> পূর্ণ নাম <span class="required">*</span></label>
+                                    <input type="text" id="reg_name" name="name" required placeholder="আপনার পূর্ণ নাম">
+                                </div>
+                                <div class="dpdt-form-group">
+                                    <label for="reg_phone"><i class="fas fa-phone"></i> মোবাইল নম্বর <span class="required">*</span></label>
+                                    <input type="tel" id="reg_phone" name="phone" required placeholder="+880 1XXX-XXXXXX">
+                                </div>
+                            </div>
+                            <div class="dpdt-form-group">
+                                <label for="reg_email"><i class="fas fa-envelope"></i> ইমেইল ঠিকানা <span class="required">*</span></label>
+                                <input type="email" id="reg_email" name="email" required placeholder="আপনার ইমেইল লিখুন">
+                            </div>
+                            <div class="dpdt-form-row-2">
+                                <div class="dpdt-form-group">
+                                    <label for="reg_password"><i class="fas fa-lock"></i> পাসওয়ার্ড <span class="required">*</span></label>
+                                    <input type="password" id="reg_password" name="password" required placeholder="কমপক্ষে ৬ অক্ষর">
+                                    <div class="password-toggle">
+                                        <button type="button" class="toggle-pass" data-target="reg_password"><i class="fas fa-eye"></i></button>
+                                    </div>
+                                </div>
+                                <div class="dpdt-form-group">
+                                    <label for="reg_confirm_password"><i class="fas fa-lock"></i> পাসওয়ার্ড নিশ্চিত করুন <span class="required">*</span></label>
+                                    <input type="password" id="reg_confirm_password" name="confirm_password" required placeholder="পুনরায় পাসওয়ার্ড লিখুন">
+                                    <div class="password-toggle">
+                                        <button type="button" class="toggle-pass" data-target="reg_confirm_password"><i class="fas fa-eye"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dpdt-form-group">
+                                <label for="reg_org"><i class="fas fa-building"></i> প্রতিষ্ঠানের নাম (ঐচ্ছিক)</label>
+                                <input type="text" id="reg_org" name="organization" placeholder="প্রতিষ্ঠানের নাম">
+                            </div>
+                            <div class="auth-options">
+                                <label class="remember-me"><input type="checkbox" name="terms" required> আমি <a href="#">শর্তাবলী</a> ও <a href="#">গোপনীয়তা নীতি</a> মেনে নিচ্ছি</label>
+                            </div>
+                            <button type="submit" class="dpdt-btn dpdt-btn-primary dpdt-btn-large dpdt-btn-full">
+                                <span class="btn-text"><i class="fas fa-user-plus"></i> রেজিস্টার করুন</span>
+                                <span class="btn-loading" style="display:none;"><i class="fas fa-spinner fa-spin"></i> তৈরি হচ্ছে...</span>
+                            </button>
+                        </form>
+                        <div class="auth-footer">
+                            <p>ইতিমধ্যে অ্যাকাউন্ট আছে? <a href="#" data-page="login" class="auth-link">লগইন করুন</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div><!-- END page-register -->
 
 
     <!-- Footer -->
@@ -500,8 +630,8 @@
                 <div class="footer-col">
                     <h4>দ্রুত লিংক</h4>
                     <ul>
-                        <li><a href="#">অনলাইন আবেদন</a></li>
-                        <li><a href="#">সার্টিফিকেট যাচাই</a></li>
+                        <li><a href="#" data-page="trademark-register">অনলাইন আবেদন</a></li>
+                        <li><a href="#" data-page="verify">সার্টিফিকেট যাচাই</a></li>
                         <li><a href="#">ট্রেডমার্ক জার্নাল</a></li>
                         <li><a href="#">ফরম ডাউনলোড</a></li>
                         <li><a href="#">ফি তালিকা</a></li>
