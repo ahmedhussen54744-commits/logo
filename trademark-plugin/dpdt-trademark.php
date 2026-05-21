@@ -3,7 +3,7 @@
  * Plugin Name: DPDT Trademark Certificate System
  * Plugin URI: https://dpdt.gov.bd
  * Description: Advanced Trademark Certificate Management - Apply, Approve, Verify with QR Code. Secure POST-based system.
- * Version: 2.0.0
+ * Version: 3.0.0
  * Author: DPDT Development Team
  * Author URI: https://dpdt.gov.bd
  * License: GPL v2 or later
@@ -13,7 +13,7 @@
 
 if (!defined('ABSPATH')) exit;
 
-define('DPDT_VERSION', '2.0.0');
+define('DPDT_VERSION', '3.0.0');
 define('DPDT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('DPDT_PLUGIN_URL', plugin_dir_url(__FILE__));
 
