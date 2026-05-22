@@ -133,6 +133,8 @@ class DPDT_Application {
         } else {
             wp_send_json_error(array('message' => __('আবেদন জমা দিতে সমস্যা হয়েছে। পুনরায় চেষ্টা করুন।', 'dpdt-trademark')));
         }
+
+        wp_die();
     }
 
     /**

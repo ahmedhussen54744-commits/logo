@@ -15,8 +15,26 @@ if (!$app) {
     return;
 }
 
+// Ensure all properties exist with defaults
+$defaults = array(
+    'id' => 0, 'application_id' => '', 'applicant_name' => '', 'applicant_name_bn' => '',
+    'applicant_email' => '', 'applicant_phone' => '', 'applicant_address' => '',
+    'brand_name' => '', 'brand_name_bn' => '', 'trademark_class' => '', 'trademark_type' => 'word',
+    'brand_logo_url' => '', 'description' => '', 'owner_name' => '', 'owner_name_bn' => '',
+    'company_name' => '', 'application_date' => '', 'registration_date' => '',
+    'approved_date' => '', 'expiry_date' => '', 'status' => 'pending',
+    'certificate_number' => '', 'certificate_pdf_url' => '', 'certificate_jpg_url' => '',
+    'qr_code_url' => '', 'verify_url' => '', 'admin_notes' => '',
+    'ip_address' => '', 'created_at' => '', 'updated_at' => '',
+);
+foreach ($defaults as $key => $default) {
+    if (!isset($app->$key)) {
+        $app->$key = $default;
+    }
+}
+
 $qrcode = new DPDT_QRCode();
-$qr_url = $qrcode->get_qr_url($app->application_id);
+$qr_url = isset($app->application_id) ? $qrcode->get_qr_url($app->application_id) : '';
 ?>
 <div class="wrap dpdt-edit-application-wrap">
     <h1>
