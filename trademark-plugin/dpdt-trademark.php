@@ -3,7 +3,7 @@
  * Plugin Name: DPDT Trademark Certificate System
  * Plugin URI: https://dpdt.gov.bd
  * Description: Complete Trademark Certificate Management System for Bangladesh Department of Patents, Designs and Trademarks (DPDT). Features: application management, certificate generation, QR verification, logo management, category pages, and full admin control.
- * Version: 4.3.2
+ * Version: 4.4.0
  * Author: DPDT Development Team
  * Author URI: https://dpdt.gov.bd
  * Text Domain: dpdt-trademark
@@ -17,12 +17,12 @@
 if (!defined('ABSPATH')) exit;
 
 // Plugin Constants
-define('DPDT_VERSION', '4.3.2');
+define('DPDT_VERSION', '4.4.0');
 define('DPDT_PLUGIN_FILE', __FILE__);
 define('DPDT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('DPDT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('DPDT_PLUGIN_BASENAME', plugin_basename(__FILE__));
-define('DPDT_DB_VERSION', '4.3.2');
+define('DPDT_DB_VERSION', '4.4.0');
 define('DPDT_MIN_PHP', '7.4');
 define('DPDT_MIN_WP', '5.8');
 define('DPDT_TEXT_DOMAIN', 'dpdt-trademark');
@@ -239,16 +239,19 @@ final class DPDT_Trademark_Plugin {
     }
 
     public function init() {
+        // Force table creation if table doesn't exist
+        global $wpdb;
+        $table = $wpdb->prefix . 'dpdt_applications';
+        if ($wpdb->get_var("SHOW TABLES LIKE '$table'") !== $table) {
+            $this->database->create_tables();
+            update_option('dpdt_db_version', DPDT_DB_VERSION);
+        }
+
         // Auto-upgrade database if version mismatch
         $current_db_version = get_option('dpdt_db_version', '0');
         if (version_compare($current_db_version, DPDT_DB_VERSION, '<')) {
             $this->database->create_tables();
             update_option('dpdt_db_version', DPDT_DB_VERSION);
-        }
-
-        // Session handling for rate limiting - safely
-        if (!session_id() && !headers_sent() && php_sapi_name() !== 'cli') {
-            @session_start();
         }
     }
 
@@ -592,6 +595,10 @@ final class DPDT_Trademark_Plugin {
 
         $db = new DPDT_Database();
         $app = $db->get_application_by_app_id($application_id);
+        if (!$app) {
+            // Try by numeric ID
+            $app = $db->get_application(intval($application_id));
+        }
         if (!$app) {
             wp_send_json_error(array('message' => 'Application not found'));
         }

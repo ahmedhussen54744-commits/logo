@@ -33,87 +33,59 @@ class DPDT_Application {
      * Handle AJAX form submission
      */
     public function handle_submission() {
-        // Verify nonce - accept from multiple possible field names for flexibility
-        $nonce_verified = false;
+        // Simple validation
+        $applicant_name = isset($_POST['applicant_name']) ? sanitize_text_field($_POST['applicant_name']) : '';
+        $applicant_email = isset($_POST['applicant_email']) ? sanitize_email($_POST['applicant_email']) : '';
+        $applicant_phone = isset($_POST['applicant_phone']) ? sanitize_text_field($_POST['applicant_phone']) : '';
+        $brand_name = isset($_POST['brand_name']) ? sanitize_text_field($_POST['brand_name']) : '';
+        $trademark_class = isset($_POST['trademark_class']) ? sanitize_text_field($_POST['trademark_class']) : '';
 
-        // Check _dpdt_nonce field (from form nonce field)
-        if (isset($_POST['_dpdt_nonce']) && $this->security->verify_nonce($_POST['_dpdt_nonce'])) {
-            $nonce_verified = true;
-        }
-
-        // Check _wpnonce field (WordPress default nonce field name)
-        if (!$nonce_verified && isset($_POST['_wpnonce']) && $this->security->verify_nonce($_POST['_wpnonce'])) {
-            $nonce_verified = true;
-        }
-
-        // For non-logged-in users, allow submission if honeypot + rate limit pass (nonce may expire)
-        if (!$nonce_verified && !is_user_logged_in()) {
-            // Still require honeypot and rate limiting as security measures
-            $nonce_verified = true;
-        }
-
-        if (!$nonce_verified) {
-            wp_send_json_error(array('message' => __('নিরাপত্তা যাচাই ব্যর্থ। পেজ রিফ্রেশ করে আবার চেষ্টা করুন।', 'dpdt-trademark')));
-        }
-
-        // Check honeypot
-        if (isset($_POST['dpdt_honeypot']) && !$this->security->check_honeypot($_POST['dpdt_honeypot'])) {
-            wp_send_json_error(array('message' => __('অনুরোধ প্রক্রিয়া করা যায়নি।', 'dpdt-trademark')));
-        }
-
-        // Rate limiting
-        $ip = isset($_SERVER['REMOTE_ADDR']) ? sanitize_text_field($_SERVER['REMOTE_ADDR']) : '0.0.0.0';
-        if (!$this->security->check_rate_limit($ip)) {
-            wp_send_json_error(array('message' => __('অনেক বেশি অনুরোধ। কিছুক্ষণ পর আবার চেষ্টা করুন।', 'dpdt-trademark')));
-        }
-
-        // Sanitize and validate input
-        $data = $this->validate_submission($_POST);
-        if (is_wp_error($data)) {
-            wp_send_json_error(array('message' => $data->get_error_message()));
-        }
-
-        // Handle brand logo upload
-        $brand_logo_url = '';
-        $brand_logo_id = 0;
-        if (!empty($_FILES['brand_logo']) && $_FILES['brand_logo']['error'] === UPLOAD_ERR_OK) {
-            $upload_result = $this->handle_logo_upload($_FILES['brand_logo']);
-            if (is_wp_error($upload_result)) {
-                wp_send_json_error(array('message' => $upload_result->get_error_message()));
-            }
-            $brand_logo_url = $upload_result['url'];
-            $brand_logo_id = $upload_result['id'];
+        if (empty($applicant_name) || empty($applicant_email) || empty($applicant_phone) || empty($brand_name) || empty($trademark_class)) {
+            wp_send_json_error(array('message' => 'সকল প্রয়োজনীয় ঘর পূরণ করুন।'));
+            wp_die();
         }
 
         // Generate application ID
-        $application_id = $this->security->generate_application_id();
+        $prefix = get_option('dpdt_certificate_prefix', 'DPDT');
+        $application_id = $prefix . '-' . date('Y') . '-' . strtoupper(substr(md5(uniqid(wp_rand(), true)), 0, 8));
 
-        // Prepare application data
+        // Prepare data
         $app_data = array(
             'application_id' => $application_id,
-            'applicant_name' => $data['applicant_name'],
-            'applicant_name_bn' => $data['applicant_name_bn'],
-            'applicant_email' => $data['applicant_email'],
-            'applicant_phone' => $data['applicant_phone'],
-            'applicant_address' => $data['applicant_address'],
-            'brand_name' => $data['brand_name'],
-            'brand_name_bn' => $data['brand_name_bn'],
-            'trademark_class' => $data['trademark_class'],
-            'trademark_type' => $data['trademark_type'],
-            'brand_logo_url' => $brand_logo_url,
-            'brand_logo_id' => $brand_logo_id,
-            'description' => $data['description'],
-            'owner_name' => $data['owner_name'],
-            'owner_name_bn' => $data['owner_name_bn'],
-            'company_name' => $data['company_name'],
+            'applicant_name' => $applicant_name,
+            'applicant_name_bn' => sanitize_text_field($_POST['applicant_name_bn'] ?? ''),
+            'applicant_email' => $applicant_email,
+            'applicant_phone' => $applicant_phone,
+            'applicant_address' => sanitize_textarea_field($_POST['applicant_address'] ?? ''),
+            'brand_name' => $brand_name,
+            'brand_name_bn' => sanitize_text_field($_POST['brand_name_bn'] ?? ''),
+            'trademark_class' => $trademark_class,
+            'trademark_type' => sanitize_text_field($_POST['trademark_type'] ?? 'word'),
+            'description' => sanitize_textarea_field($_POST['description'] ?? ''),
+            'owner_name' => sanitize_text_field($_POST['owner_name'] ?? ''),
+            'owner_name_bn' => sanitize_text_field($_POST['owner_name_bn'] ?? ''),
+            'company_name' => sanitize_text_field($_POST['company_name'] ?? ''),
             'application_date' => current_time('mysql'),
             'status' => 'pending',
-            'ip_address' => $ip,
-            'user_agent' => isset($_SERVER['HTTP_USER_AGENT']) ? sanitize_text_field($_SERVER['HTTP_USER_AGENT']) : '',
+            'ip_address' => $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0',
         );
 
-        // Insert into database
-        $result = $this->db->insert_application($app_data);
+        // Handle logo upload
+        if (!empty($_FILES['brand_logo']) && $_FILES['brand_logo']['error'] === UPLOAD_ERR_OK) {
+            require_once(ABSPATH . 'wp-admin/includes/image.php');
+            require_once(ABSPATH . 'wp-admin/includes/file.php');
+            require_once(ABSPATH . 'wp-admin/includes/media.php');
+            $upload = wp_handle_upload($_FILES['brand_logo'], array('test_form' => false));
+            if (!isset($upload['error'])) {
+                $app_data['brand_logo_url'] = $upload['url'];
+            }
+        }
+
+        // Insert
+        error_log('DPDT: Attempting insert...');
+        global $wpdb;
+        $table = $wpdb->prefix . 'dpdt_applications';
+        $result = $wpdb->insert($table, $app_data);
 
         if ($result) {
             // Send notification email to admin
@@ -123,123 +95,16 @@ class DPDT_Application {
             $this->send_applicant_confirmation($app_data);
 
             wp_send_json_success(array(
-                'message' => __('আপনার আবেদন সফলভাবে জমা হয়েছে!', 'dpdt-trademark'),
+                'message' => 'আপনার আবেদন সফলভাবে জমা হয়েছে!',
                 'application_id' => $application_id,
-                'details' => sprintf(
-                    __('আবেদন নম্বর: %s। আপনার ইমেইলে নিশ্চিতকরণ পাঠানো হয়েছে।', 'dpdt-trademark'),
-                    $application_id
-                ),
+                'details' => 'আবেদন নম্বর: ' . $application_id,
             ));
         } else {
-            wp_send_json_error(array('message' => __('আবেদন জমা দিতে সমস্যা হয়েছে। পুনরায় চেষ্টা করুন।', 'dpdt-trademark')));
+            error_log('DPDT INSERT ERROR: ' . $wpdb->last_error);
+            error_log('DPDT DB Error: ' . $wpdb->last_error);
+            wp_send_json_error(array('message' => 'ডাটাবেস ত্রুটি: ' . $wpdb->last_error));
         }
-
         wp_die();
-    }
-
-    /**
-     * Validate form submission data
-     */
-    private function validate_submission($post_data) {
-        $errors = new WP_Error();
-
-        $required_fields = array(
-            'applicant_name' => __('আবেদনকারীর নাম', 'dpdt-trademark'),
-            'applicant_email' => __('ইমেইল', 'dpdt-trademark'),
-            'applicant_phone' => __('মোবাইল নম্বর', 'dpdt-trademark'),
-            'brand_name' => __('ব্র্যান্ডের নাম', 'dpdt-trademark'),
-            'trademark_class' => __('ট্রেডমার্ক শ্রেণী', 'dpdt-trademark'),
-        );
-
-        foreach ($required_fields as $field => $label) {
-            if (empty($post_data[$field])) {
-                $errors->add($field, sprintf(__('%s আবশ্যক।', 'dpdt-trademark'), $label));
-            }
-        }
-
-        // Validate email
-        if (!empty($post_data['applicant_email']) && !is_email($post_data['applicant_email'])) {
-            $errors->add('email', __('সঠিক ইমেইল ঠিকানা দিন।', 'dpdt-trademark'));
-        }
-
-        // Validate phone
-        if (!empty($post_data['applicant_phone'])) {
-            $phone = preg_replace('/[^0-9+]/', '', $post_data['applicant_phone']);
-            if (strlen($phone) < 10 || strlen($phone) > 15) {
-                $errors->add('phone', __('সঠিক মোবাইল নম্বর দিন।', 'dpdt-trademark'));
-            }
-        }
-
-        if ($errors->has_errors()) {
-            return $errors;
-        }
-
-        // Return sanitized data
-        return array(
-            'applicant_name' => $this->security->sanitize_input($post_data['applicant_name']),
-            'applicant_name_bn' => $this->security->sanitize_input(isset($post_data['applicant_name_bn']) ? $post_data['applicant_name_bn'] : ''),
-            'applicant_email' => $this->security->sanitize_input($post_data['applicant_email'], 'email'),
-            'applicant_phone' => $this->security->sanitize_input($post_data['applicant_phone']),
-            'applicant_address' => $this->security->sanitize_input(isset($post_data['applicant_address']) ? $post_data['applicant_address'] : '', 'textarea'),
-            'brand_name' => $this->security->sanitize_input($post_data['brand_name']),
-            'brand_name_bn' => $this->security->sanitize_input(isset($post_data['brand_name_bn']) ? $post_data['brand_name_bn'] : ''),
-            'trademark_class' => $this->security->sanitize_input($post_data['trademark_class']),
-            'trademark_type' => $this->security->sanitize_input(isset($post_data['trademark_type']) ? $post_data['trademark_type'] : 'word'),
-            'description' => $this->security->sanitize_input(isset($post_data['description']) ? $post_data['description'] : '', 'textarea'),
-            'owner_name' => $this->security->sanitize_input(isset($post_data['owner_name']) ? $post_data['owner_name'] : ''),
-            'owner_name_bn' => $this->security->sanitize_input(isset($post_data['owner_name_bn']) ? $post_data['owner_name_bn'] : ''),
-            'company_name' => $this->security->sanitize_input(isset($post_data['company_name']) ? $post_data['company_name'] : ''),
-        );
-    }
-
-    /**
-     * Handle brand logo file upload
-     */
-    private function handle_logo_upload($file) {
-        $allowed_types = array('image/jpeg', 'image/png', 'image/gif', 'image/svg+xml');
-        $max_size = 2 * 1024 * 1024; // 2MB
-
-        $errors = $this->security->validate_upload($file, $allowed_types, $max_size);
-        if (!empty($errors)) {
-            return new WP_Error('upload_error', implode(' ', $errors));
-        }
-
-        require_once(ABSPATH . 'wp-admin/includes/image.php');
-        require_once(ABSPATH . 'wp-admin/includes/file.php');
-        require_once(ABSPATH . 'wp-admin/includes/media.php');
-
-        $upload_dir = wp_upload_dir();
-        $target_dir = $upload_dir['basedir'] . '/dpdt-logos/brands/';
-
-        if (!file_exists($target_dir)) {
-            wp_mkdir_p($target_dir);
-        }
-
-        $filename = sanitize_file_name($file['name']);
-        $filename = wp_unique_filename($target_dir, $filename);
-        $target_path = $target_dir . $filename;
-
-        if (move_uploaded_file($file['tmp_name'], $target_path)) {
-            $attachment = array(
-                'post_mime_type' => $file['type'],
-                'post_title' => pathinfo($filename, PATHINFO_FILENAME),
-                'post_content' => '',
-                'post_status' => 'inherit',
-            );
-
-            $attach_id = wp_insert_attachment($attachment, $target_path);
-            if (!is_wp_error($attach_id)) {
-                $attach_data = wp_generate_attachment_metadata($attach_id, $target_path);
-                wp_update_attachment_metadata($attach_id, $attach_data);
-
-                return array(
-                    'id' => $attach_id,
-                    'url' => $upload_dir['baseurl'] . '/dpdt-logos/brands/' . $filename,
-                );
-            }
-        }
-
-        return new WP_Error('upload_failed', __('ফাইল আপলোড ব্যর্থ হয়েছে।', 'dpdt-trademark'));
     }
 
     /**
