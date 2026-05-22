@@ -35,7 +35,7 @@ class DPDT_QRCode {
 
         // Generate QR code using Google Charts API as fallback
         // In production, use a local library like phpqrcode
-        $qr_api_url = 'https://chart.googleapis.com/chart?chs=' . $this->size . 'x' . $this->size . '&cht=qr&chl=' . urlencode($data) . '&choe=UTF-8&chld=H|' . $this->margin;
+        $qr_api_url = 'https://api.qrserver.com/v1/create-qr-code/?size=' . $this->size . 'x' . $this->size . '&format=png&margin=' . $this->margin . '&data=' . urlencode($data);
 
         $response = wp_remote_get($qr_api_url, array('timeout' => 30));
 
