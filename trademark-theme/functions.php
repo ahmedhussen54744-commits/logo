@@ -3,10 +3,10 @@ if (!defined('ABSPATH')) exit;
 
 /**
  * DPDT Trademark Theme Functions
- * Version: 4.1.0
+ * Version: 4.2.0
  */
 
-define('DPDT_THEME_VERSION', '4.1.0');
+define('DPDT_THEME_VERSION', '4.2.0');
 define('DPDT_THEME_DIR', get_template_directory());
 define('DPDT_THEME_URI', get_template_directory_uri());
 
@@ -49,6 +49,73 @@ function dpdt_theme_setup() {
     ));
 }
 add_action('after_setup_theme', 'dpdt_theme_setup');
+
+/**
+ * Automatically create required pages on theme activation
+ * Creates pages with shortcodes so plugin features work without manual setup
+ */
+function dpdt_theme_create_pages() {
+    // Define pages to create
+    $pages = array(
+        array(
+            'title'     => 'ট্রেডমার্ক আবেদন',
+            'slug'      => 'apply',
+            'content'   => '[dpdt_apply_form]',
+            'template'  => 'page-templates/full-width.php',
+        ),
+        array(
+            'title'     => 'সার্টিফিকেট যাচাই',
+            'slug'      => 'verify',
+            'content'   => '[dpdt_verify]',
+            'template'  => 'page-templates/full-width.php',
+        ),
+        array(
+            'title'     => 'ট্রেডমার্ক ক্যাটাগরি',
+            'slug'      => 'trademark-categories',
+            'content'   => '[dpdt_services]',
+            'template'  => 'page-templates/full-width.php',
+        ),
+    );
+
+    foreach ($pages as $page_data) {
+        // Check if page with this slug already exists
+        $existing = get_page_by_path($page_data['slug']);
+
+        if (!$existing) {
+            $page_id = wp_insert_post(array(
+                'post_title'     => $page_data['title'],
+                'post_name'      => $page_data['slug'],
+                'post_content'   => $page_data['content'],
+                'post_status'    => 'publish',
+                'post_type'      => 'page',
+                'comment_status' => 'closed',
+                'ping_status'    => 'closed',
+            ));
+
+            // Assign page template if specified
+            if ($page_id && !is_wp_error($page_id) && !empty($page_data['template'])) {
+                update_post_meta($page_id, '_wp_page_template', $page_data['template']);
+            }
+        } else {
+            // Page exists - make sure it has the correct shortcode content
+            if (empty($existing->post_content) || strpos($existing->post_content, '[dpdt_') === false) {
+                wp_update_post(array(
+                    'ID'           => $existing->ID,
+                    'post_content' => $page_data['content'],
+                    'post_status'  => 'publish',
+                ));
+            }
+            // Ensure template is set
+            if (!empty($page_data['template'])) {
+                update_post_meta($existing->ID, '_wp_page_template', $page_data['template']);
+            }
+        }
+    }
+
+    // Flush rewrite rules to recognize new pages
+    flush_rewrite_rules();
+}
+add_action('after_switch_theme', 'dpdt_theme_create_pages');
 
 /**
  * Enqueue Styles and Scripts

@@ -1,7 +1,7 @@
 /**
  * DPDT Theme - Main Styles
  * Designed to match dpdt.gov.bd
- * Version: 4.1.0
+ * Version: 4.2.0
  */
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700;800&display=swap');
@@ -1061,4 +1061,135 @@
     font-size: 0.75rem;
     color: var(--dpdt-accent-dark);
     font-weight: 600;
+}
+
+
+
+/* ====== Services Grid - dpdt.gov.bd Circle Icon Cards ====== */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 10px 0;
+}
+
+.service-card {
+    background: var(--dpdt-white);
+    border-radius: var(--dpdt-radius);
+    box-shadow: var(--dpdt-shadow);
+    text-align: center;
+    padding: 35px 25px 30px;
+    transition: all 0.3s ease;
+    border: 1px solid var(--dpdt-border);
+    border-top: 3px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--dpdt-shadow-lg);
+    border-top-color: var(--dpdt-accent);
+}
+
+.service-card a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.service-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background: linear-gradient(135deg, var(--dpdt-primary), var(--dpdt-primary-dark));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--dpdt-accent);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(26, 82, 118, 0.3);
+}
+
+.service-card:hover .service-icon {
+    background: linear-gradient(135deg, var(--dpdt-accent), var(--dpdt-accent-dark));
+    border-color: var(--dpdt-primary);
+    transform: scale(1.08);
+}
+
+.service-icon .dashicons {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+    color: var(--dpdt-white);
+}
+
+.service-card:hover .service-icon .dashicons {
+    color: var(--dpdt-dark);
+}
+
+.service-title {
+    font-size: 1.1rem;
+    color: var(--dpdt-primary);
+    margin: 0 0 10px;
+    font-family: var(--dpdt-heading-font);
+    font-weight: 700;
+}
+
+.service-card:hover .service-title {
+    color: var(--dpdt-accent-dark);
+}
+
+.service-desc {
+    font-size: 0.88rem;
+    color: var(--dpdt-text-light);
+    margin: 0 0 15px;
+    line-height: 1.6;
+}
+
+.service-link {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--dpdt-accent-dark);
+    padding: 6px 16px;
+    border: 1px solid var(--dpdt-accent);
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.service-card:hover .service-link {
+    background: var(--dpdt-accent);
+    color: var(--dpdt-dark);
+    border-color: var(--dpdt-accent);
+}
+
+/* Services Grid responsive */
+@media (max-width: 768px) {
+    .services-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 20px;
+    }
+
+    .service-card {
+        padding: 25px 20px;
+    }
+
+    .service-icon {
+        width: 65px;
+        height: 65px;
+    }
+
+    .service-icon .dashicons {
+        font-size: 26px;
+        width: 26px;
+        height: 26px;
+    }
+}
+
+@media (max-width: 480px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
 }
