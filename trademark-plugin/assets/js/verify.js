@@ -173,12 +173,28 @@
                 $('#verify-logo-section').hide();
             }
 
-            // Certificate image
+            // Certificate image (show inline, NOT as download link)
             if (cert.certificate_jpg_url) {
                 $('#verify-cert-img-section').show();
                 $('#verify-cert-img').attr('src', cert.certificate_jpg_url).attr('alt', 'Certificate');
             } else {
                 $('#verify-cert-img-section').hide();
+            }
+
+            // QR Code image
+            if (cert.qr_code_url) {
+                $('#verify-qr-section').show();
+                $('#verify-qr-img').attr('src', cert.qr_code_url).attr('alt', 'QR Code');
+            } else {
+                $('#verify-qr-section').hide();
+            }
+
+            // Certificate verify URL
+            if (cert.verify_url) {
+                $('#verify-cert-url-section').show();
+                $('#verify-cert-url').attr('href', cert.verify_url).text(cert.verify_url);
+            } else {
+                $('#verify-cert-url-section').hide();
             }
 
             // Scroll to result
@@ -197,6 +213,8 @@
                 '<h3>সার্টিফিকেট বৈধ</h3>' +
                 '</div>' +
                 '<div class="dpdt-verify-details">' +
+                '<div id="verify-logo-section" style="display:none;text-align:center;margin-bottom:20px;"><img id="verify-brand-logo" src="" style="max-width:150px;max-height:150px;" /><p id="verify-brand-owner"></p></div>' +
+                '<div id="verify-cert-img-section" style="display:none;text-align:center;margin-bottom:20px;"><img id="verify-cert-img" src="" style="max-width:100%;border:1px solid #ddd;padding:5px;" /></div>' +
                 '<table class="dpdt-verify-table">' +
                 '<tr><th>সার্টিফিকেট নম্বর:</th><td id="verify-cert-number"></td></tr>' +
                 '<tr><th>ব্র্যান্ড:</th><td id="verify-brand-name"></td></tr>' +
@@ -210,8 +228,8 @@
                 '<tr><th>স্ট্যাটাস:</th><td id="verify-status"></td></tr>' +
                 '</table>' +
                 '</div>' +
-                '<div id="verify-logo-section" style="display:none;"><img id="verify-brand-logo" src="" /><p id="verify-brand-owner"></p></div>' +
-                '<div id="verify-cert-img-section" style="display:none;"><img id="verify-cert-img" src="" /></div>' +
+                '<div id="verify-qr-section" style="display:none;text-align:center;margin-top:20px;"><img id="verify-qr-img" src="" style="max-width:200px;" /></div>' +
+                '<div id="verify-cert-url-section" style="display:none;text-align:center;margin-top:10px;"><a id="verify-cert-url" href="" target="_blank"></a></div>' +
                 '</div>';
         },
 

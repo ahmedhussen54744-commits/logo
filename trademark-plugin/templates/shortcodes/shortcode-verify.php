@@ -52,7 +52,7 @@ $token = isset($_GET['token']) ? sanitize_text_field($_GET['token']) : '';
 
                 <!-- Certificate Image -->
                 <div class="dpdt-verify-certificate-img" id="verify-cert-img-section" style="display:none;">
-                    <img id="verify-cert-img" src="" alt="Certificate" />
+                    <img id="verify-cert-img" src="" alt="Certificate" style="max-width:100%;border:1px solid #ddd;padding:5px;border-radius:4px;" />
                 </div>
 
                 <!-- Details Table -->
@@ -98,6 +98,16 @@ $token = isset($_GET['token']) ? sanitize_text_field($_GET['token']) : '';
                         <td id="verify-status"></td>
                     </tr>
                 </table>
+
+                <!-- QR Code -->
+                <div class="dpdt-verify-qr" id="verify-qr-section" style="display:none;text-align:center;margin-top:20px;">
+                    <img id="verify-qr-img" src="" alt="QR Code" style="max-width:200px;" />
+                </div>
+
+                <!-- Certificate URL -->
+                <div class="dpdt-verify-cert-url" id="verify-cert-url-section" style="display:none;text-align:center;margin-top:10px;">
+                    <a id="verify-cert-url" href="" target="_blank" style="color:#1a5276;text-decoration:underline;"></a>
+                </div>
             </div>
 
             <div class="dpdt-verify-footer">
