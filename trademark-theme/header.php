@@ -16,12 +16,12 @@ if (!defined('ABSPATH')) exit;
 <a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e('বিষয়বস্তুতে যান', 'dpdt-theme'); ?></a>
 
 <header id="masthead" class="site-header">
-    <!-- Top Bar -->
+    <!-- Top Bar - dpdt.gov.bd style dark navy -->
     <div class="header-top-bar">
         <div class="container">
             <div class="top-bar-left">
                 <span class="established-text">
-                    <?php echo esc_html(get_option('dpdt_site_established', '২০০৯') ? 'প্রতিষ্ঠিত: ' . get_option('dpdt_site_established', '২০০৯') : ''); ?>
+                    <?php echo esc_html('প্রতিষ্ঠিত: ' . get_option('dpdt_site_established', '২০০৯')); ?>
                 </span>
                 <span class="top-bar-divider">|</span>
                 <span class="gov-text"><?php esc_html_e('গণপ্রজাতন্ত্রী বাংলাদেশ সরকার', 'dpdt-theme'); ?></span>
@@ -40,11 +40,27 @@ if (!defined('ABSPATH')) exit;
                         <span class="dashicons dashicons-email"></span> <?php echo esc_html($email); ?>
                     </a>
                 <?php endif; ?>
+
+                <?php if (is_user_logged_in()) : ?>
+                    <a href="<?php echo esc_url(admin_url()); ?>" class="top-bar-btn">
+                        <span class="dashicons dashicons-dashboard"></span> ড্যাশবোর্ড
+                    </a>
+                    <a href="<?php echo esc_url(wp_logout_url(home_url('/'))); ?>" class="top-bar-btn btn-outline">
+                        লগআউট
+                    </a>
+                <?php else : ?>
+                    <a href="<?php echo esc_url(wp_login_url()); ?>" class="top-bar-btn">
+                        <span class="dashicons dashicons-lock"></span> লগইন
+                    </a>
+                    <a href="<?php echo esc_url(wp_registration_url()); ?>" class="top-bar-btn btn-outline">
+                        রেজিস্ট্রেশন
+                    </a>
+                <?php endif; ?>
             </div>
         </div>
     </div>
 
-    <!-- Main Header -->
+    <!-- Main Header - Navy blue background -->
     <div class="header-main">
         <div class="container">
             <div class="header-branding">
@@ -73,7 +89,7 @@ if (!defined('ABSPATH')) exit;
         </div>
     </div>
 
-    <!-- Navigation -->
+    <!-- Navigation - Dark blue -->
     <nav id="site-navigation" class="main-navigation" role="navigation" aria-label="<?php esc_attr_e('প্রধান মেনু', 'dpdt-theme'); ?>">
         <div class="container">
             <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false" aria-label="<?php esc_attr_e('মেনু', 'dpdt-theme'); ?>">

@@ -3,7 +3,7 @@
  * Plugin Name: DPDT Trademark Certificate System
  * Plugin URI: https://dpdt.gov.bd
  * Description: Complete Trademark Certificate Management System for Bangladesh Department of Patents, Designs and Trademarks (DPDT). Features: application management, certificate generation, QR verification, logo management, category pages, and full admin control.
- * Version: 4.0.0
+ * Version: 4.1.0
  * Author: DPDT Development Team
  * Author URI: https://dpdt.gov.bd
  * Text Domain: dpdt-trademark
@@ -17,12 +17,12 @@
 if (!defined('ABSPATH')) exit;
 
 // Plugin Constants
-define('DPDT_VERSION', '4.0.0');
+define('DPDT_VERSION', '4.1.0');
 define('DPDT_PLUGIN_FILE', __FILE__);
 define('DPDT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('DPDT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('DPDT_PLUGIN_BASENAME', plugin_basename(__FILE__));
-define('DPDT_DB_VERSION', '4.0.0');
+define('DPDT_DB_VERSION', '4.1.0');
 define('DPDT_MIN_PHP', '7.4');
 define('DPDT_MIN_WP', '5.8');
 define('DPDT_TEXT_DOMAIN', 'dpdt-trademark');

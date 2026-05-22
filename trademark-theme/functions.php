@@ -3,10 +3,10 @@ if (!defined('ABSPATH')) exit;
 
 /**
  * DPDT Trademark Theme Functions
- * Version: 3.5.0
+ * Version: 4.1.0
  */
 
-define('DPDT_THEME_VERSION', '3.5.0');
+define('DPDT_THEME_VERSION', '4.1.0');
 define('DPDT_THEME_DIR', get_template_directory());
 define('DPDT_THEME_URI', get_template_directory_uri());
 
