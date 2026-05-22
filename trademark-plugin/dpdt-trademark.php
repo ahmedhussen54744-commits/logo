@@ -17,12 +17,12 @@
 if (!defined('ABSPATH')) exit;
 
 // Plugin Constants
-define('DPDT_VERSION', '4.3.0');
+define('DPDT_VERSION', '4.3.1');
 define('DPDT_PLUGIN_FILE', __FILE__);
 define('DPDT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('DPDT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('DPDT_PLUGIN_BASENAME', plugin_basename(__FILE__));
-define('DPDT_DB_VERSION', '4.3.0');
+define('DPDT_DB_VERSION', '4.3.1');
 define('DPDT_MIN_PHP', '7.4');
 define('DPDT_MIN_WP', '5.8');
 define('DPDT_TEXT_DOMAIN', 'dpdt-trademark');
@@ -57,8 +57,14 @@ final class DPDT_Trademark_Plugin {
 
     private function __construct() {
         $this->check_requirements();
-        $this->load_dependencies();
-        $this->init_hooks();
+        try {
+            $this->load_dependencies();
+            $this->init_hooks();
+        } catch (Exception $e) {
+            add_action('admin_notices', function() use ($e) {
+                echo '<div class="notice notice-error"><p>DPDT Plugin Error: ' . esc_html($e->getMessage()) . '</p></div>';
+            });
+        }
     }
 
     private function check_requirements() {
@@ -233,9 +239,9 @@ final class DPDT_Trademark_Plugin {
     }
 
     public function init() {
-        // Session handling for rate limiting
-        if (!session_id() && !headers_sent()) {
-            session_start();
+        // Session handling for rate limiting - safely
+        if (!session_id() && !headers_sent() && php_sapi_name() !== 'cli') {
+            @session_start();
         }
     }
 

@@ -11,8 +11,13 @@ class DPDT_Security {
     private $encryption_method = 'AES-256-CBC';
 
     public function __construct() {
-        add_action('init', array($this, 'init_security_headers'));
-        add_action('wp_head', array($this, 'add_security_meta'));
+        // Only add these hooks if not in CLI and not too late
+        if (php_sapi_name() !== 'cli') {
+            if (!did_action('init')) {
+                add_action('init', array($this, 'init_security_headers'));
+            }
+            add_action('wp_head', array($this, 'add_security_meta'));
+        }
     }
 
     /**
