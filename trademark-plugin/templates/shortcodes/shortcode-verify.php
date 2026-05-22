@@ -62,6 +62,10 @@ $token = isset($_GET['token']) ? sanitize_text_field($_GET['token']) : '';
                         <td id="verify-cert-number"></td>
                     </tr>
                     <tr>
+                        <th><?php esc_html_e('ট্রেডমার্ক নম্বর (Trademark Number)', 'dpdt-trademark'); ?></th>
+                        <td id="verify-trademark-number"></td>
+                    </tr>
+                    <tr>
                         <th><?php esc_html_e('ব্র্যান্ড নাম', 'dpdt-trademark'); ?></th>
                         <td id="verify-brand-name"></td>
                     </tr>

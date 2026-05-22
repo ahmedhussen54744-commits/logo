@@ -140,6 +140,7 @@
 
             // Fill in data
             $('#verify-cert-number').text(cert.certificate_number || cert.application_id || '-');
+            $('#verify-trademark-number').text(cert.application_id || '-');
             $('#verify-brand-name').text(cert.brand_name + (cert.brand_name_bn ? ' (' + cert.brand_name_bn + ')' : ''));
             $('#verify-holder-name').text(cert.applicant_name + (cert.owner_name ? ' / ' + cert.owner_name : ''));
             $('#verify-company').text(cert.company_name || '-');
@@ -217,6 +218,7 @@
                 '<div id="verify-cert-img-section" style="display:none;text-align:center;margin-bottom:20px;"><img id="verify-cert-img" src="" style="max-width:100%;border:1px solid #ddd;padding:5px;" /></div>' +
                 '<table class="dpdt-verify-table">' +
                 '<tr><th>সার্টিফিকেট নম্বর:</th><td id="verify-cert-number"></td></tr>' +
+                '<tr><th>ট্রেডমার্ক নম্বর (Trademark Number):</th><td id="verify-trademark-number"></td></tr>' +
                 '<tr><th>ব্র্যান্ড:</th><td id="verify-brand-name"></td></tr>' +
                 '<tr><th>আবেদনকারী:</th><td id="verify-holder-name"></td></tr>' +
                 '<tr><th>প্রতিষ্ঠান:</th><td id="verify-company"></td></tr>' +

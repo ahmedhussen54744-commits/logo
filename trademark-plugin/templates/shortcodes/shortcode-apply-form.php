@@ -20,11 +20,11 @@ $classes = DPDT_Application::get_trademark_classes();
 
         <!-- Applicant Information -->
         <fieldset class="dpdt-fieldset">
-            <legend><?php esc_html_e('আবেদনকারীর তথ্য', 'dpdt-trademark'); ?></legend>
+            <legend><?php esc_html_e('আবেদনকারীর তথ্য (Applicant Information)', 'dpdt-trademark'); ?></legend>
 
             <div class="dpdt-form-row dpdt-form-row-2">
                 <div class="dpdt-form-group">
-                    <label for="applicant_name"><?php esc_html_e('আবেদনকারীর নাম (English)', 'dpdt-trademark'); ?> <span class="required">*</span></label>
+                    <label for="applicant_name"><?php esc_html_e('আবেদনকারীর নাম (Applicant Name)', 'dpdt-trademark'); ?> <span class="required">*</span></label>
                     <input type="text" id="applicant_name" name="applicant_name" required placeholder="Full Name in English" />
                 </div>
                 <div class="dpdt-form-group">
@@ -35,28 +35,28 @@ $classes = DPDT_Application::get_trademark_classes();
 
             <div class="dpdt-form-row dpdt-form-row-2">
                 <div class="dpdt-form-group">
-                    <label for="applicant_email"><?php esc_html_e('ইমেইল ঠিকানা', 'dpdt-trademark'); ?> <span class="required">*</span></label>
+                    <label for="applicant_email"><?php esc_html_e('ইমেইল ঠিকানা (Email Address)', 'dpdt-trademark'); ?> <span class="required">*</span></label>
                     <input type="email" id="applicant_email" name="applicant_email" required placeholder="email@example.com" />
                 </div>
                 <div class="dpdt-form-group">
-                    <label for="applicant_phone"><?php esc_html_e('মোবাইল নম্বর', 'dpdt-trademark'); ?> <span class="required">*</span></label>
+                    <label for="applicant_phone"><?php esc_html_e('মোবাইল নম্বর (Mobile Number)', 'dpdt-trademark'); ?> <span class="required">*</span></label>
                     <input type="tel" id="applicant_phone" name="applicant_phone" required placeholder="+880 1XXX-XXXXXX" />
                 </div>
             </div>
 
             <div class="dpdt-form-group">
-                <label for="applicant_address"><?php esc_html_e('ঠিকানা', 'dpdt-trademark'); ?></label>
+                <label for="applicant_address"><?php esc_html_e('ঠিকানা (Address)', 'dpdt-trademark'); ?></label>
                 <textarea id="applicant_address" name="applicant_address" rows="3" placeholder="সম্পূর্ণ ঠিকানা লিখুন"></textarea>
             </div>
         </fieldset>
 
         <!-- Brand/Trademark Information -->
         <fieldset class="dpdt-fieldset">
-            <legend><?php esc_html_e('ব্র্যান্ড/ট্রেডমার্ক তথ্য', 'dpdt-trademark'); ?></legend>
+            <legend><?php esc_html_e('ব্র্যান্ড/ট্রেডমার্ক তথ্য (Brand/Trademark Information)', 'dpdt-trademark'); ?></legend>
 
             <div class="dpdt-form-row dpdt-form-row-2">
                 <div class="dpdt-form-group">
-                    <label for="brand_name"><?php esc_html_e('ব্র্যান্ডের নাম (English)', 'dpdt-trademark'); ?> <span class="required">*</span></label>
+                    <label for="brand_name"><?php esc_html_e('ব্র্যান্ডের নাম (Brand Name)', 'dpdt-trademark'); ?> <span class="required">*</span></label>
                     <input type="text" id="brand_name" name="brand_name" required placeholder="Brand Name" />
                 </div>
                 <div class="dpdt-form-group">
@@ -67,7 +67,7 @@ $classes = DPDT_Application::get_trademark_classes();
 
             <div class="dpdt-form-row dpdt-form-row-2">
                 <div class="dpdt-form-group">
-                    <label for="trademark_class"><?php esc_html_e('ট্রেডমার্ক শ্রেণী', 'dpdt-trademark'); ?> <span class="required">*</span></label>
+                    <label for="trademark_class"><?php esc_html_e('ট্রেডমার্ক শ্রেণী (Trademark Class)', 'dpdt-trademark'); ?> <span class="required">*</span></label>
                     <select id="trademark_class" name="trademark_class" required>
                         <option value=""><?php esc_html_e('— শ্রেণী নির্বাচন করুন —', 'dpdt-trademark'); ?></option>
                         <?php foreach ($classes as $value => $label) : ?>
@@ -76,7 +76,7 @@ $classes = DPDT_Application::get_trademark_classes();
                     </select>
                 </div>
                 <div class="dpdt-form-group">
-                    <label for="trademark_type"><?php esc_html_e('ট্রেডমার্কের ধরন', 'dpdt-trademark'); ?></label>
+                    <label for="trademark_type"><?php esc_html_e('ট্রেডমার্কের ধরন (Trademark Type)', 'dpdt-trademark'); ?></label>
                     <select id="trademark_type" name="trademark_type">
                         <option value="word"><?php esc_html_e('শব্দ (Word Mark)', 'dpdt-trademark'); ?></option>
                         <option value="device"><?php esc_html_e('ডিভাইস (Device Mark)', 'dpdt-trademark'); ?></option>
@@ -89,7 +89,7 @@ $classes = DPDT_Application::get_trademark_classes();
             </div>
 
             <div class="dpdt-form-group">
-                <label for="brand_logo"><?php esc_html_e('ব্র্যান্ড লোগো', 'dpdt-trademark'); ?></label>
+                <label for="brand_logo"><?php esc_html_e('ব্র্যান্ড লোগো (Brand Logo)', 'dpdt-trademark'); ?></label>
                 <div class="dpdt-file-upload">
                     <input type="file" id="brand_logo" name="brand_logo" accept="image/jpeg,image/png,image/gif,image/svg+xml" />
                     <p class="description"><?php esc_html_e('অনুমোদিত: JPG, PNG, GIF, SVG। সর্বোচ্চ সাইজ: 2MB', 'dpdt-trademark'); ?></p>
@@ -98,18 +98,18 @@ $classes = DPDT_Application::get_trademark_classes();
             </div>
 
             <div class="dpdt-form-group">
-                <label for="description"><?php esc_html_e('পণ্য/সেবার বর্ণনা', 'dpdt-trademark'); ?></label>
+                <label for="description"><?php esc_html_e('পণ্য/সেবার বর্ণনা (Product/Service Description)', 'dpdt-trademark'); ?></label>
                 <textarea id="description" name="description" rows="4" placeholder="আপনার পণ্য বা সেবার বিস্তারিত বর্ণনা দিন"></textarea>
             </div>
         </fieldset>
 
         <!-- Owner Information -->
         <fieldset class="dpdt-fieldset">
-            <legend><?php esc_html_e('মালিকের তথ্য', 'dpdt-trademark'); ?></legend>
+            <legend><?php esc_html_e('মালিকের তথ্য (Owner Information)', 'dpdt-trademark'); ?></legend>
 
             <div class="dpdt-form-row dpdt-form-row-2">
                 <div class="dpdt-form-group">
-                    <label for="owner_name"><?php esc_html_e('মালিকের নাম (English)', 'dpdt-trademark'); ?></label>
+                    <label for="owner_name"><?php esc_html_e('মালিকের নাম (Owner Name)', 'dpdt-trademark'); ?></label>
                     <input type="text" id="owner_name" name="owner_name" placeholder="Owner Name" />
                 </div>
                 <div class="dpdt-form-group">
@@ -119,7 +119,7 @@ $classes = DPDT_Application::get_trademark_classes();
             </div>
 
             <div class="dpdt-form-group">
-                <label for="company_name"><?php esc_html_e('প্রতিষ্ঠানের নাম', 'dpdt-trademark'); ?></label>
+                <label for="company_name"><?php esc_html_e('প্রতিষ্ঠানের নাম (Company/Organization Name)', 'dpdt-trademark'); ?></label>
                 <input type="text" id="company_name" name="company_name" placeholder="Company/Organization Name" />
             </div>
         </fieldset>
