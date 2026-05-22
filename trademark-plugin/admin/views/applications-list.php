@@ -96,6 +96,7 @@ if (!defined('ABSPATH')) exit;
                                         <button type="button" class="button button-small button-primary dpdt-approve-btn" data-id="<?php echo intval($app->id); ?>"><?php esc_html_e('অনুমোদন', 'dpdt-trademark'); ?></button>
                                         <button type="button" class="button button-small dpdt-reject-btn" data-id="<?php echo intval($app->id); ?>"><?php esc_html_e('প্রত্যাখ্যান', 'dpdt-trademark'); ?></button>
                                     <?php endif; ?>
+                                    <a href="<?php echo admin_url('admin.php?page=dpdt-application-edit&app_id=' . intval($app->id)); ?>" class="button button-small"><?php esc_html_e('সম্পাদনা', 'dpdt-trademark'); ?></a>
                                     <button type="button" class="button button-small dpdt-view-btn" data-id="<?php echo intval($app->id); ?>"><?php esc_html_e('বিস্তারিত', 'dpdt-trademark'); ?></button>
                                 </div>
                             </td>

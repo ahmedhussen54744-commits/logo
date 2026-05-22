@@ -131,6 +131,16 @@ class DPDT_Admin {
                 'is_valid' => 1,
             ));
 
+            // Generate QR code
+            $qrcode = new DPDT_QRCode();
+            $qr_result = $qrcode->generate($verify_url, 'qr_' . sanitize_file_name($application->application_id) . '.png');
+            if ($qr_result && !empty($qr_result['url'])) {
+                $this->db->update_application($app_id, array(
+                    'qr_code_url' => $qr_result['url'],
+                    'qr_code_data' => $qr_result['data'],
+                ));
+            }
+
             // Send approval email
             $this->send_approval_email($application, $cert_number, $verify_url);
 

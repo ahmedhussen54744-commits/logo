@@ -206,6 +206,8 @@ class DPDT_Verify {
             'expiry_date' => $expiry_date,
             'certificate_jpg_url' => isset($application->certificate_jpg_url) ? $application->certificate_jpg_url : '',
             'certificate_pdf_url' => isset($application->certificate_pdf_url) ? $application->certificate_pdf_url : '',
+            'qr_code_url' => isset($application->qr_code_url) ? $application->qr_code_url : '',
+            'verify_url' => isset($application->verify_url) ? $application->verify_url : '',
             'status' => isset($application->status) ? $application->status : '',
             'is_valid' => true,
             'is_expired' => $is_expired,

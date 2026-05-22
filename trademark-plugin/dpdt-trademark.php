@@ -3,7 +3,7 @@
  * Plugin Name: DPDT Trademark Certificate System
  * Plugin URI: https://dpdt.gov.bd
  * Description: Complete Trademark Certificate Management System for Bangladesh Department of Patents, Designs and Trademarks (DPDT). Features: application management, certificate generation, QR verification, logo management, category pages, and full admin control.
- * Version: 4.2.0
+ * Version: 4.3.0
  * Author: DPDT Development Team
  * Author URI: https://dpdt.gov.bd
  * Text Domain: dpdt-trademark
@@ -17,12 +17,12 @@
 if (!defined('ABSPATH')) exit;
 
 // Plugin Constants
-define('DPDT_VERSION', '4.2.0');
+define('DPDT_VERSION', '4.3.0');
 define('DPDT_PLUGIN_FILE', __FILE__);
 define('DPDT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('DPDT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('DPDT_PLUGIN_BASENAME', plugin_basename(__FILE__));
-define('DPDT_DB_VERSION', '4.2.0');
+define('DPDT_DB_VERSION', '4.3.0');
 define('DPDT_MIN_PHP', '7.4');
 define('DPDT_MIN_WP', '5.8');
 define('DPDT_TEXT_DOMAIN', 'dpdt-trademark');
@@ -135,6 +135,11 @@ final class DPDT_Trademark_Plugin {
         add_action('wp_ajax_dpdt_reject_application', array($this->admin, 'reject_application'));
         add_action('wp_ajax_dpdt_upload_logo', array($this->logo_manager, 'handle_upload'));
         add_action('wp_ajax_dpdt_delete_logo', array($this->logo_manager, 'handle_delete'));
+
+        // Admin application management AJAX handlers
+        add_action('wp_ajax_dpdt_admin_update_application', array($this, 'ajax_admin_update_application'));
+        add_action('wp_ajax_dpdt_admin_upload_certificate', array($this, 'ajax_admin_upload_certificate'));
+        add_action('wp_ajax_dpdt_admin_generate_qr', array($this, 'ajax_admin_generate_qr'));
 
         // Template redirect
         add_action('template_redirect', array($this, 'template_redirect'));
@@ -336,7 +341,7 @@ final class DPDT_Trademark_Plugin {
     }
 
     public function enqueue_admin_assets($hook) {
-        if (strpos($hook, 'dpdt') === false && strpos($hook, 'trademark') === false) {
+        if (strpos($hook, 'dpdt') === false && strpos($hook, 'trademark') === false && strpos($hook, 'application') === false) {
             return;
         }
 
@@ -368,6 +373,7 @@ final class DPDT_Trademark_Plugin {
         // Sub menus
         add_submenu_page('dpdt-dashboard', __('ড্যাশবোর্ড', 'dpdt-trademark'), __('ড্যাশবোর্ড', 'dpdt-trademark'), 'manage_options', 'dpdt-dashboard', array($this->dashboard, 'render'));
         add_submenu_page('dpdt-dashboard', __('আবেদন সমূহ', 'dpdt-trademark'), __('আবেদন সমূহ', 'dpdt-trademark'), 'manage_options', 'dpdt-applications', array($this->admin, 'render_applications'));
+        add_submenu_page('dpdt-dashboard', __('আবেদন সম্পাদনা', 'dpdt-trademark'), '', 'manage_options', 'dpdt-application-edit', array($this, 'render_application_edit'));
         add_submenu_page('dpdt-dashboard', __('সেটিংস', 'dpdt-trademark'), __('সেটিংস', 'dpdt-trademark'), 'manage_options', 'dpdt-settings', array($this->settings, 'render'));
         add_submenu_page('dpdt-dashboard', __('লোগো সেটিংস', 'dpdt-trademark'), __('লোগো সেটিংস', 'dpdt-trademark'), 'manage_options', 'dpdt-logo-settings', array(new DPDT_Logo_Settings(), 'render'));
         add_submenu_page('dpdt-dashboard', __('ক্যাটাগরি সেটিংস', 'dpdt-trademark'), __('ক্যাটাগরি/পেজ', 'dpdt-trademark'), 'manage_options', 'dpdt-categories', array($this->category_manager, 'render_admin_page'));
@@ -400,6 +406,255 @@ final class DPDT_Trademark_Plugin {
 
     public function load_textdomain() {
         load_plugin_textdomain('dpdt-trademark', false, dirname(DPDT_PLUGIN_BASENAME) . '/languages');
+    }
+
+    /**
+     * Render application edit page
+     */
+    public function render_application_edit() {
+        include DPDT_PLUGIN_DIR . 'admin/views/application-edit.php';
+    }
+
+    /**
+     * AJAX: Admin update application
+     */
+    public function ajax_admin_update_application() {
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(array('message' => 'Unauthorized'));
+        }
+
+        if (!isset($_POST['_dpdt_nonce']) || !wp_verify_nonce($_POST['_dpdt_nonce'], DPDT_NONCE_ACTION)) {
+            wp_send_json_error(array('message' => 'Security check failed'));
+        }
+
+        $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
+        if (!$id) {
+            wp_send_json_error(array('message' => 'Invalid application ID'));
+        }
+
+        $db = new DPDT_Database();
+        $app = $db->get_application($id);
+        if (!$app) {
+            wp_send_json_error(array('message' => 'Application not found'));
+        }
+
+        // Prepare update data
+        $update_data = array(
+            'applicant_name' => sanitize_text_field($_POST['applicant_name'] ?? $app->applicant_name),
+            'applicant_name_bn' => sanitize_text_field($_POST['applicant_name_bn'] ?? $app->applicant_name_bn),
+            'applicant_email' => sanitize_email($_POST['applicant_email'] ?? $app->applicant_email),
+            'applicant_phone' => sanitize_text_field($_POST['applicant_phone'] ?? $app->applicant_phone),
+            'applicant_address' => sanitize_textarea_field($_POST['applicant_address'] ?? $app->applicant_address),
+            'brand_name' => sanitize_text_field($_POST['brand_name'] ?? $app->brand_name),
+            'brand_name_bn' => sanitize_text_field($_POST['brand_name_bn'] ?? $app->brand_name_bn),
+            'trademark_class' => sanitize_text_field($_POST['trademark_class'] ?? $app->trademark_class),
+            'trademark_type' => sanitize_text_field($_POST['trademark_type'] ?? $app->trademark_type),
+            'owner_name' => sanitize_text_field($_POST['owner_name'] ?? $app->owner_name),
+            'owner_name_bn' => sanitize_text_field($_POST['owner_name_bn'] ?? $app->owner_name_bn),
+            'company_name' => sanitize_text_field($_POST['company_name'] ?? $app->company_name),
+            'description' => sanitize_textarea_field($_POST['description'] ?? $app->description),
+            'status' => sanitize_text_field($_POST['status'] ?? $app->status),
+            'certificate_number' => sanitize_text_field($_POST['certificate_number'] ?? $app->certificate_number),
+            'verify_url' => esc_url_raw($_POST['verify_url'] ?? $app->verify_url),
+            'admin_notes' => sanitize_textarea_field($_POST['admin_notes'] ?? $app->admin_notes),
+            'brand_logo_url' => esc_url_raw($_POST['brand_logo_url'] ?? $app->brand_logo_url),
+        );
+
+        // Handle dates
+        if (!empty($_POST['application_date'])) {
+            $update_data['application_date'] = sanitize_text_field($_POST['application_date']);
+        }
+        if (!empty($_POST['registration_date'])) {
+            $update_data['registration_date'] = sanitize_text_field($_POST['registration_date']);
+        }
+        if (!empty($_POST['approved_date'])) {
+            $update_data['approved_date'] = sanitize_text_field($_POST['approved_date']);
+        }
+        if (!empty($_POST['expiry_date'])) {
+            $update_data['expiry_date'] = sanitize_text_field($_POST['expiry_date']);
+        }
+
+        // Handle certificate JPG upload
+        if (!empty($_FILES['certificate_jpg']) && $_FILES['certificate_jpg']['error'] === UPLOAD_ERR_OK) {
+            $upload = $this->handle_admin_certificate_upload($_FILES['certificate_jpg'], 'jpg');
+            if (!is_wp_error($upload)) {
+                $update_data['certificate_jpg_url'] = $upload['url'];
+                $update_data['certificate_jpg_id'] = $upload['id'];
+            }
+        }
+
+        // Handle certificate PDF upload
+        if (!empty($_FILES['certificate_pdf']) && $_FILES['certificate_pdf']['error'] === UPLOAD_ERR_OK) {
+            $upload = $this->handle_admin_certificate_upload($_FILES['certificate_pdf'], 'pdf');
+            if (!is_wp_error($upload)) {
+                $update_data['certificate_pdf_url'] = $upload['url'];
+                $update_data['certificate_pdf_id'] = $upload['id'];
+            }
+        }
+
+        // If status changed to approved and no QR exists, generate one
+        if ($update_data['status'] === 'approved' && $app->status !== 'approved') {
+            $qrcode = new DPDT_QRCode();
+            $verify_url = get_option('dpdt_verify_base_url', home_url('/verify/'));
+            $qr_result = $qrcode->generate_for_certificate($app->application_id, $app->application_id);
+            if ($qr_result && !empty($qr_result['url'])) {
+                $update_data['qr_code_url'] = $qr_result['url'];
+                $update_data['qr_code_data'] = $qr_result['data'];
+            }
+            // Set verify_url if empty
+            if (empty($update_data['verify_url'])) {
+                $update_data['verify_url'] = add_query_arg('token', $app->application_id, $verify_url);
+            }
+        }
+
+        $result = $db->update_application($id, $update_data);
+
+        if ($result !== false) {
+            wp_send_json_success(array('message' => __('আবেদন সফলভাবে আপডেট হয়েছে!', 'dpdt-trademark')));
+        } else {
+            wp_send_json_error(array('message' => __('আপডেট করতে সমস্যা হয়েছে।', 'dpdt-trademark')));
+        }
+    }
+
+    /**
+     * AJAX: Admin upload certificate file
+     */
+    public function ajax_admin_upload_certificate() {
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(array('message' => 'Unauthorized'));
+        }
+
+        if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], DPDT_NONCE_ACTION)) {
+            wp_send_json_error(array('message' => 'Security check failed'));
+        }
+
+        $app_id = isset($_POST['application_id']) ? intval($_POST['application_id']) : 0;
+        $file_type = isset($_POST['file_type']) ? sanitize_text_field($_POST['file_type']) : '';
+
+        if (!$app_id || !in_array($file_type, array('jpg', 'pdf'))) {
+            wp_send_json_error(array('message' => 'Invalid parameters'));
+        }
+
+        $file_key = 'certificate_file';
+        if (empty($_FILES[$file_key]) || $_FILES[$file_key]['error'] !== UPLOAD_ERR_OK) {
+            wp_send_json_error(array('message' => 'No file uploaded'));
+        }
+
+        $upload = $this->handle_admin_certificate_upload($_FILES[$file_key], $file_type);
+        if (is_wp_error($upload)) {
+            wp_send_json_error(array('message' => $upload->get_error_message()));
+        }
+
+        $db = new DPDT_Database();
+        $update_field = ($file_type === 'jpg') ? 'certificate_jpg_url' : 'certificate_pdf_url';
+        $update_id_field = ($file_type === 'jpg') ? 'certificate_jpg_id' : 'certificate_pdf_id';
+
+        $db->update_application($app_id, array(
+            $update_field => $upload['url'],
+            $update_id_field => $upload['id'],
+        ));
+
+        wp_send_json_success(array(
+            'message' => __('ফাইল সফলভাবে আপলোড হয়েছে!', 'dpdt-trademark'),
+            'url' => $upload['url'],
+        ));
+    }
+
+    /**
+     * AJAX: Generate QR code for application
+     */
+    public function ajax_admin_generate_qr() {
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(array('message' => 'Unauthorized'));
+        }
+
+        if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], DPDT_NONCE_ACTION)) {
+            wp_send_json_error(array('message' => 'Security check failed'));
+        }
+
+        $application_id = isset($_POST['application_id']) ? sanitize_text_field($_POST['application_id']) : '';
+        if (empty($application_id)) {
+            wp_send_json_error(array('message' => 'Invalid application'));
+        }
+
+        $db = new DPDT_Database();
+        $app = $db->get_application_by_app_id($application_id);
+        if (!$app) {
+            wp_send_json_error(array('message' => 'Application not found'));
+        }
+
+        $qrcode = new DPDT_QRCode();
+        $verify_url = get_option('dpdt_verify_base_url', home_url('/verify/'));
+        $full_url = add_query_arg('token', $application_id, $verify_url);
+
+        $qr_result = $qrcode->generate($full_url, 'qr_' . sanitize_file_name($application_id) . '.png');
+
+        if ($qr_result && !empty($qr_result['url'])) {
+            $db->update_application($app->id, array(
+                'qr_code_url' => $qr_result['url'],
+                'qr_code_data' => $qr_result['data'],
+                'verify_url' => $full_url,
+            ));
+
+            wp_send_json_success(array(
+                'message' => __('QR কোড সফলভাবে তৈরি হয়েছে!', 'dpdt-trademark'),
+                'qr_url' => $qr_result['url'],
+                'verify_url' => $full_url,
+            ));
+        } else {
+            wp_send_json_error(array('message' => __('QR কোড তৈরি ব্যর্থ হয়েছে।', 'dpdt-trademark')));
+        }
+    }
+
+    /**
+     * Handle certificate file upload for admin
+     */
+    private function handle_admin_certificate_upload($file, $type) {
+        $allowed = array(
+            'pdf' => array('application/pdf'),
+            'jpg' => array('image/jpeg', 'image/png', 'image/jpg'),
+        );
+
+        if (!isset($allowed[$type])) {
+            return new WP_Error('invalid_type', 'Invalid file type');
+        }
+
+        require_once(ABSPATH . 'wp-admin/includes/image.php');
+        require_once(ABSPATH . 'wp-admin/includes/file.php');
+        require_once(ABSPATH . 'wp-admin/includes/media.php');
+
+        $upload_dir = wp_upload_dir();
+        $target_dir = $upload_dir['basedir'] . '/dpdt-certificates/' . $type . '/';
+
+        if (!file_exists($target_dir)) {
+            wp_mkdir_p($target_dir);
+        }
+
+        $filename = sanitize_file_name($file['name']);
+        $filename = wp_unique_filename($target_dir, $filename);
+        $target_path = $target_dir . $filename;
+
+        if (move_uploaded_file($file['tmp_name'], $target_path)) {
+            $attachment = array(
+                'post_mime_type' => $file['type'],
+                'post_title' => pathinfo($filename, PATHINFO_FILENAME),
+                'post_content' => '',
+                'post_status' => 'inherit',
+            );
+
+            $attach_id = wp_insert_attachment($attachment, $target_path);
+            if (!is_wp_error($attach_id)) {
+                $attach_data = wp_generate_attachment_metadata($attach_id, $target_path);
+                wp_update_attachment_metadata($attach_id, $attach_data);
+
+                return array(
+                    'id' => $attach_id,
+                    'url' => $upload_dir['baseurl'] . '/dpdt-certificates/' . $type . '/' . $filename,
+                );
+            }
+        }
+
+        return new WP_Error('upload_failed', 'Upload failed');
     }
 }
 
