@@ -77,6 +77,7 @@ class DPDT_Application {
 
         $field_map = array(
             'application_id' => array($application_id, '%s'),
+            'app_code' => array($application_id, '%s'),
             'applicant_name' => array($applicant_name, '%s'),
             'applicant_name_bn' => array(sanitize_text_field($_POST['applicant_name_bn'] ?? ''), '%s'),
             'applicant_email' => array($applicant_email, '%s'),
