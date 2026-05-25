@@ -33,76 +33,117 @@ class DPDT_Application {
      * Handle AJAX form submission
      */
     public function handle_submission() {
-        // Simple validation
+        global $wpdb;
+        $table = $wpdb->prefix . 'dpdt_applications';
+
+        // Make sure table exists
+        $table_exists = $wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $table));
+        if ($table_exists !== $table) {
+            // Try to create it
+            if (class_exists('DPDT_Database')) {
+                $db = new DPDT_Database();
+                $db->create_tables();
+            }
+            // Check again
+            $table_exists = $wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $table));
+            if ($table_exists !== $table) {
+                wp_send_json_error(array('message' => 'ডাটাবেস টেবিল তৈরি করা যায়নি। প্লাগিন Deactivate করে আবার Activate করুন।'));
+                wp_die();
+            }
+        }
+
+        // Get form data
         $applicant_name = isset($_POST['applicant_name']) ? sanitize_text_field($_POST['applicant_name']) : '';
         $applicant_email = isset($_POST['applicant_email']) ? sanitize_email($_POST['applicant_email']) : '';
         $applicant_phone = isset($_POST['applicant_phone']) ? sanitize_text_field($_POST['applicant_phone']) : '';
         $brand_name = isset($_POST['brand_name']) ? sanitize_text_field($_POST['brand_name']) : '';
         $trademark_class = isset($_POST['trademark_class']) ? sanitize_text_field($_POST['trademark_class']) : '';
 
+        // Validate required
         if (empty($applicant_name) || empty($applicant_email) || empty($applicant_phone) || empty($brand_name) || empty($trademark_class)) {
-            wp_send_json_error(array('message' => 'সকল প্রয়োজনীয় ঘর পূরণ করুন।'));
+            wp_send_json_error(array('message' => 'সকল প্রয়োজনীয় (*) ঘর পূরণ করুন।'));
             wp_die();
         }
 
-        // Generate application ID
-        $prefix = get_option('dpdt_certificate_prefix', 'DPDT');
-        $application_id = $prefix . '-' . date('Y') . '-' . strtoupper(substr(md5(uniqid(wp_rand(), true)), 0, 8));
+        // Generate unique ID
+        $application_id = 'DPDT-' . date('Y') . '-' . strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 8));
 
-        // Prepare data
-        $app_data = array(
-            'application_id' => $application_id,
-            'applicant_name' => $applicant_name,
-            'applicant_name_bn' => sanitize_text_field($_POST['applicant_name_bn'] ?? ''),
-            'applicant_email' => $applicant_email,
-            'applicant_phone' => $applicant_phone,
-            'applicant_address' => sanitize_textarea_field($_POST['applicant_address'] ?? ''),
-            'brand_name' => $brand_name,
-            'brand_name_bn' => sanitize_text_field($_POST['brand_name_bn'] ?? ''),
-            'trademark_class' => $trademark_class,
-            'trademark_type' => sanitize_text_field($_POST['trademark_type'] ?? 'word'),
-            'description' => sanitize_textarea_field($_POST['description'] ?? ''),
-            'owner_name' => sanitize_text_field($_POST['owner_name'] ?? ''),
-            'owner_name_bn' => sanitize_text_field($_POST['owner_name_bn'] ?? ''),
-            'company_name' => sanitize_text_field($_POST['company_name'] ?? ''),
-            'application_date' => current_time('mysql'),
-            'status' => 'pending',
-            'ip_address' => $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0',
+        // Get table columns to only insert what exists
+        $columns = $wpdb->get_col("SHOW COLUMNS FROM {$table}", 0);
+
+        // Build insert data based on what columns actually exist
+        $insert_data = array();
+        $format = array();
+
+        $field_map = array(
+            'application_id' => array($application_id, '%s'),
+            'applicant_name' => array($applicant_name, '%s'),
+            'applicant_name_bn' => array(sanitize_text_field($_POST['applicant_name_bn'] ?? ''), '%s'),
+            'applicant_email' => array($applicant_email, '%s'),
+            'applicant_phone' => array($applicant_phone, '%s'),
+            'applicant_address' => array(sanitize_textarea_field($_POST['applicant_address'] ?? ''), '%s'),
+            'brand_name' => array($brand_name, '%s'),
+            'brand_name_bn' => array(sanitize_text_field($_POST['brand_name_bn'] ?? ''), '%s'),
+            'trademark_class' => array($trademark_class, '%s'),
+            'trademark_type' => array(sanitize_text_field($_POST['trademark_type'] ?? 'word'), '%s'),
+            'description' => array(sanitize_textarea_field($_POST['description'] ?? ''), '%s'),
+            'owner_name' => array(sanitize_text_field($_POST['owner_name'] ?? ''), '%s'),
+            'owner_name_bn' => array(sanitize_text_field($_POST['owner_name_bn'] ?? ''), '%s'),
+            'company_name' => array(sanitize_text_field($_POST['company_name'] ?? ''), '%s'),
+            'application_date' => array(current_time('mysql'), '%s'),
+            'status' => array('pending', '%s'),
+            'ip_address' => array(isset($_SERVER['REMOTE_ADDR']) ? sanitize_text_field($_SERVER['REMOTE_ADDR']) : '', '%s'),
         );
 
-        // Handle logo upload
-        if (!empty($_FILES['brand_logo']) && $_FILES['brand_logo']['error'] === UPLOAD_ERR_OK) {
-            require_once(ABSPATH . 'wp-admin/includes/image.php');
-            require_once(ABSPATH . 'wp-admin/includes/file.php');
-            require_once(ABSPATH . 'wp-admin/includes/media.php');
-            $upload = wp_handle_upload($_FILES['brand_logo'], array('test_form' => false));
-            if (!isset($upload['error'])) {
-                $app_data['brand_logo_url'] = $upload['url'];
+        foreach ($field_map as $col => $val) {
+            if (in_array($col, $columns)) {
+                $insert_data[$col] = $val[0];
+                $format[] = $val[1];
             }
         }
 
-        // Insert
-        error_log('DPDT: Attempting insert...');
-        global $wpdb;
-        $table = $wpdb->prefix . 'dpdt_applications';
-        $result = $wpdb->insert($table, $app_data);
+        // Handle logo upload
+        if (!empty($_FILES['brand_logo']) && $_FILES['brand_logo']['error'] === UPLOAD_ERR_OK && in_array('brand_logo_url', $columns)) {
+            require_once(ABSPATH . 'wp-admin/includes/file.php');
+            $upload = wp_handle_upload($_FILES['brand_logo'], array('test_form' => false));
+            if (!isset($upload['error']) && isset($upload['url'])) {
+                $insert_data['brand_logo_url'] = $upload['url'];
+                $format[] = '%s';
+            }
+        }
 
-        if ($result) {
+        // Do the insert
+        $result = $wpdb->insert($table, $insert_data, $format);
+
+        if ($result !== false) {
             // Send notification email to admin
-            $this->send_admin_notification($app_data);
+            $this->send_admin_notification(array(
+                'application_id' => $application_id,
+                'applicant_name' => $applicant_name,
+                'brand_name' => $brand_name,
+                'applicant_email' => $applicant_email,
+                'applicant_phone' => $applicant_phone,
+            ));
 
             // Send confirmation email to applicant
-            $this->send_applicant_confirmation($app_data);
+            $this->send_applicant_confirmation(array(
+                'application_id' => $application_id,
+                'applicant_name' => $applicant_name,
+                'brand_name' => $brand_name,
+                'applicant_email' => $applicant_email,
+            ));
 
             wp_send_json_success(array(
                 'message' => 'আপনার আবেদন সফলভাবে জমা হয়েছে!',
                 'application_id' => $application_id,
-                'details' => 'আবেদন নম্বর: ' . $application_id,
+                'details' => 'আবেদন নম্বর: ' . $application_id . '। আপনার ইমেইলে নিশ্চিতকরণ পাঠানো হবে।',
             ));
         } else {
-            error_log('DPDT INSERT ERROR: ' . $wpdb->last_error);
-            error_log('DPDT DB Error: ' . $wpdb->last_error);
-            wp_send_json_error(array('message' => 'ডাটাবেস ত্রুটি: ' . $wpdb->last_error));
+            // Log the error for debugging
+            $error = $wpdb->last_error;
+            error_log('DPDT Application Insert Failed: ' . $error);
+            error_log('DPDT Insert Data: ' . print_r($insert_data, true));
+            wp_send_json_error(array('message' => 'আবেদন জমা দিতে সমস্যা হয়েছে। Error: ' . $error));
         }
         wp_die();
     }
